@@ -1,0 +1,2902 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="unicity">
+<head>
+							<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>APP</title>
+	<meta charset="UTF-8">
+
+	<!-- Good default declaration:
+	    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+	    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+	    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+	        * Enable inline JS: add 'unsafe-inline' to default-src
+	        * Enable eval(): add 'unsafe-eval' to default-src
+	-->
+
+	<!-- Allow everything but only from the same origin and foo.com -->
+
+
+
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+	<meta name="format-detection" content="telephone=no">
+		<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no'/>
+	<link rel="stylesheet" href="./libs/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="./libs/css/foundation.css" />
+	<link rel="stylesheet" href="./libs/css/animate.css" />
+	<link rel="stylesheet" href="./libs/css/loading.css" />
+	<link rel="stylesheet" href="./libs/css/style.css" />
+
+	<link rel="stylesheet" href="./libs/css/bootstrap-progressbar-3.3.4.min.css" />
+
+	<script src="cordova.js"></script>
+	<script src="cordova_plugins.js"></script>
+
+	<script src="./libs/js/vendor/modernizr.js"></script>
+	<script src="./libs/js/jquery-2.1.0.min.js"></script>
+	<script src="./libs/js/foundation.min.js"></script>
+	<script src="./libs/js/instafeed.min.js"></script>
+	<script src="./libs/js/hammer.min.js"></script>
+	<script src="./libs/js/jquery.hammer.js"></script>
+
+	<script src="./libs/js/angular.min.js"></script>
+	<script src="./libs/js/angular-sanitize.min.js"></script>
+	<script src="./libs/js/angular-touch.min.js"></script>
+							<!-- voy edit-->
+							<script src="./libs/js/fastclick.js"></script>
+								<script src="./libs/js/bootstrap.min.js"></script>
+										<script src="./libs/js/bootstrap-progressbar.min.js"></script>
+							<!--  -->
+	<script src="./app/language.js"></script>
+
+	<script src="./app/app.js"></script>
+	<script src="./app/pageCtrl.js"></script>
+	<script src="./app/common/profileHeaderCtrl.js"></script>
+	<script src="./app/common/successTrackerCtrl.js"></script>
+
+	<script src="./app/homeCtrls/homePageCtrl.js"></script>
+	<script src="./app/homeCtrls/networkCtrl.js"></script>
+	<script src="./app/homeCtrls/newsCtrl.js"></script>
+	<script src="./app/homeCtrls/productsCtrl.js"></script>
+	<script src="./app/homeCtrls/instagramCtrl.js"></script>
+
+	<script src="./app/profileCtrls/profilePageCtrl.js"></script>
+
+	<script src="./app/networkCtrls/networkPageCtrl.js"></script>
+	<script src="./app/networkCtrls/networkListingCtrl.js"></script>
+
+	<script src="./app/newsCtrls/newsPageCtrl.js"></script>
+	<script src="./app/prospectCtrls/prospectPageCtrl.js"></script>
+	<script src="./app/shoppingCtrls/shoppingPageCtrl.js"></script>
+
+	<script src="./app/enrollCtrls/enrollCtrl.js"></script>
+	<script src="./app/settingCtrls/settingCtrl.js"></script>
+  <script src="./app/reportCtrls/reportCtrl.js"></script>
+	<script src="./app/pageLoginCtrl.js"></script>
+
+	<!--<script src="/libs/js/require.js"></script>-->
+
+
+	<script src="./libs/js/cdv-plugin-sms.js"></script>
+							<script src="./libs/js/CDVInstagramPlugin.js"></script>
+							<script src="./libs/js/SocialSharing.js"></script>
+							<!-- voy edit-->
+<script src="./libs/js/circle-progress.js"></script>
+<script src="./libs/js/jquery.countTo.js"></script>
+							<script type="application/javascript">
+							window.addEventListener('load', function () {
+
+								FastClick.attach(document.body);
+							 }, false);
+
+
+							 var app = {
+							     // Application Constructor
+							     initialize: function() {
+							         this.bindEvents();
+							     },
+							     // Bind Event Listeners
+							     //
+							     // Bind any events that are required on startup. Common events are:
+							     // 'load', 'deviceready', 'offline', and 'online'.
+							     bindEvents: function() {
+							         document.addEventListener('deviceready', this.onDeviceReady, false);
+							     },
+							     // deviceready Event Handler
+							     //
+							     // The scope of 'this' is the event. In order to call the 'receivedEvent'
+							     // function, we must explicitly call 'app.receivedEvent(...);'
+							     onDeviceReady: function() {
+							         var push = PushNotification.init({
+							             "android": {
+							                 "senderID": "239710614352"
+							             },
+							             "ios": {"alert": "true", "badge": "true", "sound": "true"},
+							             "windows": {}
+							         });
+
+							         push.on('registration', function(data) {
+							            // console.log("registration event");
+							            // document.getElementById("regId").innerHTML = data.registrationId;
+							             console.log(JSON.stringify(data));
+
+													 $.ajax({
+														 'type' : 'GET',
+														 'url' : 'http://dev.unicity-th.com/demo/devicetoken/save.php?token='+data.registrationId+'&location=th',
+														 'success' : function(result) {
+																 console.log("save");
+														 },
+														 'error' : function() {
+															 console.log("error");
+														 }
+													 });
+
+
+							         });
+
+							         push.on('notification', function(data) {
+							         	console.log("notification event");
+							             console.log(JSON.stringify(data));
+							            /* var cards = document.getElementById("cards");
+							             var card = '<div class="row">' +
+							 		  		  '<div class="col s12 m6">' +
+							 				  '  <div class="card darken-1">' +
+							 				  '    <div class="card-content black-text">' +
+							 				  '      <span class="card-title black-text">' + data.title + '</span>' +
+							 				  '      <p>' + data.message + '</p>' +
+							 				  '    </div>' +
+							 				  '  </div>' +
+							 				  ' </div>' +
+							 				  '</div>';
+							             cards.innerHTML += card;*/
+
+							             push.finish(function () {
+							                 console.log('finish successfully called');
+							             });
+							         });
+
+							         push.on('error', function(e) {
+							             console.log("push error");
+							         });
+							     }
+							 };
+
+							 app.initialize();
+
+function dumpLocalStorageToJSON() {
+		d = {};
+		for(i = 0; i < localStorage.length; i++)
+			d[localStorage.key(i)] = localStorage.getItem(localStorage.key(i));
+		return JSON.stringify(d);
+	}
+dumpLocalStorageToJSON();
+
+
+
+
+
+							/*	jQuery(function ($) {
+											 $('.timer').each(count);
+																 function count(options) {
+																	 var $this = $(this);
+																	 options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+																	 $this.countTo(options);
+																 }
+								  });*/
+
+							</script>
+
+
+
+
+
+</head>
+<body class="ios7" id="body">
+
+
+
+
+		<div class="off-canvas-wrap" data-offcanvas ng-controller="ViewportController
+		as
+		viewport">
+			<!-- Side Navigation Menu -->
+			<aside class="left-off-canvas-menu" ng-controller="SideNavController
+			as
+			SideNavCtrl">
+				<ul class="off-canvas-list">
+					<li>
+						<label> <img src="./imgs/logo-01.png"/>Unicity Menu </label>
+					</li>
+					<li ng-repeat="menu in SideNavCtrl.menus">
+						<a href="#{{menu.goto}}" ng-click="viewport.changePage(menu.goto)" style="text-decoration:none;"> <img ng-src="{{menu.image}}"/> {{menu.label}} </a>
+					</li>
+				</ul>
+			</aside>
+			<!-- END Side Navigation Menu -->
+			<div class="inner-wrap" ng-controller="PageController
+			as
+			pageCtrl">
+				<!-- Header -->
+				<header class="fixed" ng-controller="HeaderController
+				as
+				headerCtrl">
+					<nav ng-class="headerCtrl.class" data-topbar>
+						<section class="left-small">
+							<a class="left-off-canvas-toggle" href="#"
+							ng-hide="pageCtrl.checkPage('news-single')
+							|| pageCtrl.checkPage('prospect-single')
+							|| pageCtrl.checkPage('cart')
+							|| pageCtrl.checkPage('payment')
+							|| pageCtrl.checkPage('geonetwork')
+							|| pageCtrl.checkPage('fb-sharer')
+							|| pageCtrl.checkPage('network-depth')
+							|| pageCtrl.checkPage('enroll')
+                            || pageCtrl.checkPage('enroll-payment')
+							|| pageCtrl.checkPage('instagram')" style="text-decoration:none;"> <span> <img src="./imgs/menu.png"/> </span> </a>
+							<a ng-click="pageCtrl.changePage('news', true)"
+							ng-show="pageCtrl.checkPage('news-single')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+							<a ng-click="pageCtrl.changePage('prospect', true)"
+							ng-show="pageCtrl.checkPage('prospect-single')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+							<a ng-click="pageCtrl.changePage('shopping', true)"
+							ng-show="pageCtrl.checkPage('cart')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+							<a ng-click="pageCtrl.changePage('network', true)"
+							ng-show="pageCtrl.checkPage('geonetwork')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+							<a ng-click="pageCtrl.changePage('shopping', true)"
+							ng-show="pageCtrl.checkPage('payment')" style="text-decoration:none;"> <span style="margin-left: 10px;"> {{ viewport.labels.cancel }} </span> </a>
+							<a ng-click="pageCtrl.changePage('prospect-single', true)"
+							ng-show="pageCtrl.checkPage('fb-sharer')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+							<a ng-click="pageCtrl.changePage('home', true)"
+							ng-show="pageCtrl.checkPage('instagram')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+
+							<a id="network-depth-back-button"
+							ng-show="pageCtrl.checkPage('network-depth')" style="text-decoration:none;"> <span> <img src="./imgs/back-icon.png"/> </span> </a>
+
+							<a ng-click="pageCtrl.changePage('home', true)"
+							ng-show="pageCtrl.checkPage('enroll') || pageCtrl.checkPage('enroll-payment')" style="text-decoration:none;"> <span style="margin-left: 10px;"> {{ viewport.labels.cancel }} </span> </a>
+						</section>
+						<section class="middle tab-bar-section">
+							<h1 class="title"> {{headerCtrl.title.text}} </h1>
+						</section>
+
+
+						<section class="right-small" >
+
+					<a ng-click='headerCtrl.refreshweb()'> <img src="./imgs/refresh_icon.png" style="text-decoration:none;margin-left: -30px;" />  </a>
+					</section>
+
+
+
+						<section class="right-small" >
+							<a ng-click='headerCtrl.goToCart()'> <img src="./imgs/footer/shopping.png" style="text-decoration:none;"/> <span id="cart-alert" class="alert round label"></span> </a>
+						</section>
+                                                <!-- voy edit-->
+
+					</nav>
+				</header>
+
+				<div class="viewport" >
+					<!-- Profile Page -->
+					<div id="page-profile" class="page" ng-controller="ProfilePageController as profilePageCtrl">
+						<div class="row profile-section" ng-controller="ProfileHeaderController
+						as
+						profileHeaderCtrl">
+							<div class="small-6 columns text-center">
+								<div class="profile-picture">
+									<img class="round" ng-src="{{profileHeaderCtrl.profile.image}}"/>
+								</div>
+
+								<div class="edit-text-button">
+                                    <label class="edit-text-label" ng-hide="profileHeaderCtrl.upload">
+                                    	<img src="./imgs/profile-editor/camera.png"/>
+                                    	{{ viewport.labels.edit_profile_picture }}
+                                    </label>
+                                    <label class="edit-text-label-uploading" ng-show="profileHeaderCtrl.upload">
+                                    	{{ viewport.labels.edit_profile_picture_uploading }}
+                                    </label>
+									<input type="file" id="profile-image-upload" accept="image/*" capture="camera"/>
+								</div>
+							</div>
+							<div class="small-6 columns">
+								<div class="profile-name">
+									{{profileHeaderCtrl.profile.name}}
+								</div>
+								<div class="profile-pin">
+									<img ng-src="{{profileHeaderCtrl.profile.pinImage}}"/>
+									{{profileHeaderCtrl.profile.pin}}
+								</div>
+							</div>
+						</div>
+						<!-- Profile Page : Editor -->
+						<div class="profile-editor-section">
+							<div class="row section-header">
+								{{viewport.labels.general_edit}}
+							</div>
+							<form class="editor-container">
+								<div class="row">
+									<div class="small-2 columns">
+										<label for="profile-name" class="right"> <img src="./imgs/profile-editor/name.png"/> </label>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="profile-name" ng-model="profilePageCtrl.data.name" disabled placeholder="Name ..."/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<label for="profile-phone" class="right"> <img src="./imgs/profile-editor/phone.png"/> </label>
+									</div>
+									<div class="small-10 columns">
+										<input type="tel" name="profile-phone" ng-model="profilePageCtrl.data.phone" disabled placeholder="Phone ..."/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<label for="profile-email" class="right"> <img src="./imgs/profile-editor/email.png"/> </label>
+									</div>
+									<div class="small-10 columns">
+										<input type="email" name="profile-email" ng-model="profilePageCtrl.data.email" disabled placeholder="Email ..."/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<label for="profile-location" class="right"> <img src="./imgs/profile-editor/location.png"/> </label>
+									</div>
+									<div class="small-10 columns">
+										<textarea name="profile-location" ng-model="profilePageCtrl.data.location" row="6" disabled placeholder="Location ..." disabled></textarea>
+
+									</div>
+								</div>
+								<div class="row"></div>
+
+							</form>
+						</div>
+						<!-- END Profile Page : Editor -->
+					</div>
+					<div id="page-tracker" class="page">
+
+						<!-- END Profile Page Header : Profile -->
+						<div class="goal-setting-section" ng-controller='GoalSettingController
+						as
+						goalSettingCtrl'>
+							<div class="row section-header">
+								Success Tracker
+							</div>
+							<div class="goal-month-selector">
+								<select id="goal-month-selector" ng-change="goalSettingCtrl.changeMonth()" ng-model="goalSettingCtrl.selectedMonth">
+									<option ng-repeat="option in goalSettingCtrl.monthOptions" value="{{option.value}}" ng-selected="{{goalSettingCtrl.selectedMonth==option.value?'selected':''}}">{{option.label}}</option>
+								</select>
+							</div>
+							<div class="goal-selector">
+								<div class="row">
+									<a class='columns small-4 medium-4 text-right' ng-click='goalSettingCtrl.prevGoal()'> <img src='./imgs/tracker/arrow-prev.png'/> </a>
+									<div class='columns small-4 medium-4'>
+										<div class='text-center'>
+											<img class='icon-goal' ng-src='{{ goalSettingCtrl.iconBase + goalSettingCtrl.pinImage[goalSettingCtrl.goal + 1]}}'/>
+										</div>
+									</div>
+									<a class='columns small-4 medium-4 text-left' ng-click='goalSettingCtrl.nextGoal()'> <img src='./imgs/tracker/arrow-next.png'/> </a>
+								</div>
+								<div class="row">
+									<div class='text-center icon-label'>
+										{{goalSettingCtrl.pinName[goalSettingCtrl.goal + 1]}}
+									</div>
+								</div>
+							</div>
+
+							<div class="goal-block " id="goal_block">
+
+
+							<style id="jsbin-css">
+
+							#circle_pv {
+								position: relative;
+								width: 80px;
+								height: 80px;
+								margin: 0 auto;
+							}
+							#circle_pv img {
+								width: 80px;
+								height: 80px;
+								vertical-align: top;
+								border-radius: 50%;
+							}
+							#circle_pv canvas {
+								position: absolute;
+								left: 0;
+								top: 0;
+							}
+
+
+
+							#circle_tv {
+								position: relative;
+								width: 80px;
+								height: 80px;
+								margin: 0 auto;
+							}
+							#circle_tv img {
+								width: 75px;
+								height: 75px;
+								vertical-align: top;
+								border-radius: 50%;
+							}
+							#circle_tv canvas {
+								position: absolute;
+								left: 0;
+								top: 0;
+							}
+
+
+
+
+							#circle_leg1 {
+								position: relative;
+								width: 80px;
+								height: 80px;
+								margin: 0 auto;
+							}
+							#circle_leg1 img {
+								width: 75px;
+								height: 75px;
+								vertical-align: top;
+								border-radius: 50%;
+							}
+							#circle_leg1 canvas {
+								position: absolute;
+								left: 0;
+								top: 0;
+							}
+
+
+
+
+							#circle_leg2 {
+								position: relative;
+								width: 80px;
+								height: 80px;
+								margin: 0 auto;
+							}
+							#circle_leg2 img {
+								width: 75px;
+								height: 75px;
+								vertical-align: top;
+								border-radius: 50%;
+							}
+							#circle_leg2 canvas {
+								position: absolute;
+								left: 0;
+								top: 0;
+							}
+
+
+
+							#circle_leg3 {
+								position: relative;
+								width: 80px;
+								height: 80px;
+								margin: 0 auto;
+							}
+							#circle_leg3 img {
+								width: 75px;
+								height: 75px;
+								vertical-align: top;
+								border-radius: 50%;
+							}
+							#circle_leg3 canvas {
+								position: absolute;
+								left: 0;
+								top: 0;
+							}
+
+
+							#sizemini img {
+								width: 25px;
+								height: 25px;
+							}
+
+
+							</style>
+
+								<div ng-class="goalSettingCtrl.blockClass">
+									<div id="pv-row" class="progress-row">
+
+										<!--<div>
+											<img src="./imgs/tracker/icon-pv.png"/>
+										</div>-->
+
+										<div id="circle_pv">
+												<img src="./imgs/tracker/icon-pv_new.png" alt="photo">
+										</div>
+
+										<div class='goal-label'>
+											<div class="timer" id="txtpv" data-to="10" data-speed="500"></div>
+
+											<!--	{{goalSettingCtrl.percentage("pv")}}%-->
+										</div>
+										<div class="goal-value">
+											{{ viewport.labels.pv }} <br>{{goalSettingCtrl.progress.earn['pv'] | number }}
+										</div>
+										<div class="goal-name">
+
+										</div>
+										<div class="goal-require">
+											({{goalSettingCtrl.progress.max.pv | number }})
+										</div>
+
+									</div>
+									<div id="tv-row" class="progress-row">
+										<!--<div>
+											<img src="./imgs/tracker/icon-tv.png"/>
+										</div>-->
+
+										<div id="circle_tv">
+												<img src="./imgs/tracker/icon-tv_new.png" alt="photo">
+										</div>
+
+
+
+										<div class='goal-label'>
+												<div class="timer" id="txtov" data-to="10" data-speed="500"></div>
+											<!--{{goalSettingCtrl.percentage("ov")}}%-->
+										</div>
+										<div class="goal-value">
+											{{viewport.labels.tv}} <br> {{goalSettingCtrl.progress.earn['ov'] | number }}
+										</div>
+										<div class="goal-name">
+
+										</div>
+										<div class="goal-require">
+
+										({{goalSettingCtrl.progress.max.ov | number }})
+										</div>
+
+									</div>
+									<div id="leg1-row" class="progress-row" ng-show='goalSettingCtrl.goal > 1'>
+
+
+										<div id="circle_leg1">
+												<img src="./imgs/tracker/icon-leg1_new.png" alt="photo">
+										</div>
+
+										<!--<div>
+											<img src="./imgs/tracker/icon-leg1.png"/>
+										</div>-->
+										<div class='goal-label'>
+
+											<div class="timer" id="txtleg1" data-to="10" data-speed="500"></div>
+												<!--	{{goalSettingCtrl.percentage("leg1")}}%-->
+
+										</div>
+										<div class="goal-value">
+											{{viewport.labels.leg1}} <br>{{goalSettingCtrl.progress.earn['leg1'] | number }}
+										</div>
+										<div class="goal-name-leg">
+
+										</div>
+										<div class="goal-require">
+
+											({{goalSettingCtrl.progress.max.leg1 | number }})
+										</div>
+									</div>
+									<div id="leg2-row" class="progress-row" ng-show='goalSettingCtrl.goal > 2'>
+										<!--<div>
+											<img src="./imgs/tracker/icon-leg2.png"/>
+										</div>-->
+
+										<div id="circle_leg2">
+												<img src="./imgs/tracker/icon-leg2_new.png" alt="photo">
+										</div>
+
+										<div class='goal-label'>
+
+																						<div class="timer" id="txtleg2" data-to="10" data-speed="500"></div>
+										<!--	{{goalSettingCtrl.percentage("leg2")}}%-->
+										</div>
+										<div class="goal-value">
+											{{viewport.labels.leg2}} <br> {{goalSettingCtrl.progress.earn['leg2'] | number }}
+										</div>
+										<div class="goal-name-leg">
+
+										</div>
+										<div class="goal-require">
+
+											({{goalSettingCtrl.progress.max.leg2 | number }})
+										</div>
+									</div>
+									<div id="leg3-row" class="progress-row" ng-show='goalSettingCtrl.goal > 3'>
+										<!--<div>
+											<img src="./imgs/tracker/icon-leg3.png"/>
+										</div>-->
+
+										<div id="circle_leg3">
+												<img src="./imgs/tracker/icon-leg3_new.png" alt="photo">
+										</div>
+
+										<div class='goal-label'>
+													<div class="timer" id="txtleg3" data-to="10" data-speed="500"></div>
+										<!--	{{goalSettingCtrl.percentage("leg3")}}%-->
+										</div>
+										<div class="goal-value">
+											{{viewport.labels.leg3}} <br>{{goalSettingCtrl.progress.earn['leg3'] | number }}
+										</div>
+										<div class="goal-name-leg">
+
+										</div>
+										<div class="goal-require">
+
+											({{goalSettingCtrl.progress.max.leg3 | number }})
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+															<!-- bar chart -->
+															<div id="chart" >
+																	<p><p>
+
+																	<div id="pv-row" >
+																			<div class="row">
+																					<div class='small-2 columns' align="right">
+																						<div class='goal-label' id="chart_pv">
+																							{{goalSettingCtrl.percentage("pv")}}%
+																						</div>
+																							<div class="goal-require">
+																								<font size = "1px">
+																										({{goalSettingCtrl.progress.max.pv | number }})</font>
+																							</div>
+																					</div>
+																			<div class='small-7 columns'>
+																				<div class="progress" >
+																						<div id="pv-progress" class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal-backup="0" ></div>
+																			</div>
+																				</div>
+																					<div class='small-3 columns'>
+																							<font size = "2px">	{{ viewport.labels.pv }} : {{goalSettingCtrl.progress.earn['pv'] | number }}</font>
+																					</div>
+																				</div>
+																	</div>
+
+															<div id="tv-row_progress" >
+																	<div class="row">
+																		<div class='small-2 columns' align="right">
+																			<div class='goal-label' id="chart_ov">
+																				{{goalSettingCtrl.percentage("ov")}}%
+																			</div>
+																			<div class="goal-require">
+																				<font size = "1px">
+																				({{goalSettingCtrl.progress.max.ov | number }})</font>
+																			</div>
+																			</div>
+																					<div class='small-7 columns'>
+																							<div class="progress" >
+																								<div id="tv-progress" class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal-backup="0"></div>
+																							</div>
+																						</div>
+																				<div class='small-3 columns'>
+																					<font size = "2px">	{{ viewport.labels.tv }} : {{goalSettingCtrl.progress.earn['ov'] | number }}</font>
+																				</div>
+																</div>
+
+															</div>
+
+
+
+															<div id="leg1-row_progress" >
+																	<div class="row">
+																		<div class='small-2 columns' align="right">
+																			<div class='goal-label' id="chart_leg1">
+																					{{goalSettingCtrl.percentage("leg1")}}%
+																			</div>
+																			<div class="goal-require">
+																				<font size = "1px">
+																					({{goalSettingCtrl.progress.max.leg1 | number }})</font>
+																			</div>
+																			</div>
+																					<div class='small-7 columns'>
+																							<div class="progress" >
+																								<div id="leg1-progress" class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal-backup="0"></div>
+																							</div>
+																						</div>
+																				<div class='small-3 columns'>
+																					<font size = "2px">	{{viewport.labels.leg1}} : {{goalSettingCtrl.progress.earn['leg1'] | number }}</font>
+																				</div>
+																</div>
+
+															</div>
+
+
+
+															<div id="leg2-row_progress" >
+																	<div class="row">
+																		<div class='small-2 columns' align="right">
+																			<div class='goal-label' id="chart_leg2">
+																					{{goalSettingCtrl.percentage("leg2")}}%
+																			</div>
+																			<div class="goal-require">
+																				<font size = "1px">
+																					({{goalSettingCtrl.progress.max.leg2 | number }})</font>
+																			</div>
+																			</div>
+																					<div class='small-7 columns'>
+																							<div class="progress" >
+																								<div id="leg2-progress" class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal-backup="0"></div>
+																							</div>
+																						</div>
+																				<div class='small-3 columns'>
+																					<font size = "2px">	{{viewport.labels.leg2}} : {{goalSettingCtrl.progress.earn['leg2'] | number }}</font>
+																				</div>
+																</div>
+
+															</div>
+
+
+															<div id="leg3-row_progress" >
+																	<div class="row">
+																		<div class='small-2 columns' align="right">
+																			<div class='goal-label' id="chart_leg3">
+																					{{goalSettingCtrl.percentage("leg3")}}%
+																			</div>
+																			<div class="goal-require">
+																				<font size = "1px">
+																					({{goalSettingCtrl.progress.max.leg3 | number }})</font>
+																			</div>
+																			</div>
+																					<div class='small-7 columns'>
+																							<div class="progress" >
+																								<div id="leg3-progress" class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal-backup="0"></div>
+																							</div>
+																						</div>
+																				<div class='small-3 columns'>
+																					<font size = "2px">	{{viewport.labels.leg3}} : {{goalSettingCtrl.progress.earn['leg3'] | number }}</font>
+																				</div>
+																</div>
+
+															</div>
+
+
+											</div>
+
+
+											<div id="img-button" >
+
+
+																<center>
+																	<div class='small-12 columns'>
+																	<img src='./imgs/icon-success-01-active.png' width="40px" height="34px" id="s_icon1" class='img_menu' /> &nbsp&nbsp <img src='./imgs/icon-success-02.png' width="40px" height="34px" id="s_icon2" class='img_menu_'/>
+
+																	</div>
+																</center>
+
+
+											</div>
+													<!--	<center><div id="goal-block-2"  class="goal-block">
+						                    	<div id="pv-row" class="progress-row">
+						                        <div class="col-md-6" style="width:20%">
+																			<div class='goal-label'>
+																				{{goalSettingCtrl.percentage("pv")}}%
+																			</div>
+																		</div>
+																	<div class="col-md-6" style="width:80%">
+																				<div class="progress" >
+																						<div class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal-backup="50"></div>
+
+																			</div>{{ viewport.labels.pv }} : {{goalSettingCtrl.progress.earn['pv'] | number }}
+																			<div class="goal-require">
+																				{{viewport.labels.required}} :
+																				<br/>
+																				{{goalSettingCtrl.progress.max.pv | number }}
+																			</div>
+
+																			</div>
+
+
+
+						                        </div>
+																	</center>
+																-->
+						</div>
+
+					</div>
+
+					<!-- END Profile Page -->
+
+					<!-- Network Page -->
+					<div  ng-controller="NetworkListingController as networkListingCtrl"
+					ng-show="pageCtrl.checkPage('network') || pageCtrl.checkPage('geonetwork') || pageCtrl.checkPage('network-depth')" id="menu-network" >
+						<div id="page-network" class="page" ng-controller="NetworkPageController as networkPageCtrl" >
+							<div class="row section-header">
+								{{viewport.labels.me}}
+							</div>
+							<div class="row profile-section" ng-controller="ProfileHeaderController
+							as
+							profileHeaderCtrl">
+								<div class="small-6 columns text-center">
+									<div class="profile-picture">
+										<img class="round" ng-src="{{profileHeaderCtrl.profile.image}}"/>
+									</div>
+								</div>
+								<div class="small-6 columns">
+									<div class="profile-name">
+										{{profileHeaderCtrl.profile.name}}
+									</div>
+									<div class="profile-pin">
+										<img ng-src="{{profileHeaderCtrl.profile.pinImage}}"/>
+										{{profileHeaderCtrl.profile.pin}}
+									</div>
+								</div>
+							</div>
+							<div class="success-tracker-section" ng-controller="SuccessTrackerController
+							as
+							trackerCtrl">
+
+								<div class='month-selector'>
+									<div class='month-selector-inner'>
+										<div class="btn-group btn-group-justified">
+									  <div class="btn btn-info active" ng-click="networkListingCtrl.displayMonth(1)" id="dmonth_1">	{{trackerCtrl.currentData.month}}</div>
+									  <div class="btn btn-primary" ng-click="networkListingCtrl.displayMonth(2)" id="dmonth_2">	{{trackerCtrl.currentData.month_1}}</div>
+									  <div class="btn btn-primary" ng-click="networkListingCtrl.displayMonth(3)" id="dmonth_3">	{{trackerCtrl.currentData.month_2}}</div>
+									</div>
+
+									</div>
+								</div>
+								<div class="home-volume-orbit-container"><p>
+									<div class="slider">
+										<div>
+											<div class='small-4 columns'>
+												<div class="volume pv-volume text-center">
+													<img src='./imgs/icon/icon-pv.png'/>
+													<center><font size="2px" color="#333333">&nbsp{{trackerCtrl.currentData.pv1 | number}}</font>
+														<p>
+                                                      <font size="4px" color="#333333">  {{ viewport.labels.pv   }}
+                                                    </font>
+												</center></div>
+											</div>
+											<div class='small-4 columns'>
+												<div class="volume tv-volume text-center">
+													<img src='./imgs/icon/icon-tv.png'/>
+													<center><font size="2px" color="#333333">&nbsp{{trackerCtrl.currentData.tv1 | number}}</font>
+														<p>
+                                                                                      <font size="4px" color="#333333">   {{ viewport.labels.tv  }}
+                                                                                        </font></center>
+												</div>
+											</div>
+
+                      <div class='small-4 columns'>
+												<div class="volume ov-volume text-center">
+													<img src='./imgs/icon/icon-ov.png'/>
+													<center><font size="2px" color="#333333">&nbsp{{trackerCtrl.currentData.ov1 | number}}</font>
+														<p>
+                                                                                           <font size="4px" color="#333333"> {{ viewport.labels.ov }}
+                                                                                        </font>
+																																											</center>
+												</div>
+
+											</div>
+										</div>
+
+
+
+										<div>
+											<div class='small-4 columns'>
+
+											</div>
+											<div class='small-4 columns'>
+
+											</div>
+
+                      <div class='small-4 columns'>
+												<center>		<img src="{{trackerCtrl.currentData.icon_img}}" style="{{trackerCtrl.currentData.icon_style}}" class="{{trackerCtrl.currentData.hide}}"> {{ trackerCtrl.currentData.calov }}<p></center>
+
+											</div>
+										</div>
+
+
+
+
+
+
+									</div>
+								</div>
+								<!-- END Volume Slider Container -->
+							</div>
+
+							<!-- Network Page Header : Network -->
+							<div class='network-section'>
+								<div class="row section-header">
+									{{ viewport.labels.network }}
+								</div>
+								<div class="network-listing">
+
+									<div class="network-baseline">
+										<div class="row" ng-repeat="profile in networkListingCtrl.network">
+											<div class="small-6 medium-3 medium-push-1 columns network-display">
+												<img class="round" ng-click="networkListingCtrl.displayDepth(profile)" ng-src="{{profile.image}}" />
+												<div class="icon-button ">
+													<div class="text-center  visible-for-small">
+														<a href="mailto:{{profile.email}}" ng-show="profile.email!=''"><img src="./imgs/network/mail-icon.png"  style="width:25px;height:25px"/></a>
+														<img ng-show="profile.email==''" src="./imgs/network/mail-icon-disable.png"  style="width:25px;height:25px"/>
+														<a href="tel:{{profile.phone}}" ng-show="profile.phone!=''"><img src="./imgs/network/mobi-icon.png"  style="width:25px;height:25px"/></a>
+
+														<img ng-show="profile.phone==''" src="./imgs/network/mobi-icon-disable.png"  style="width:25px;height:25px"/>
+													</div>
+
+
+
+												</div>
+											</div>
+											<div class="small-6 medium-8 columns">
+												<div class="row">
+													<div class="small-12 columns medium-6">
+														<div class="network-listing-name" ng-click="networkListingCtrl.displayDepth(profile)">
+															{{profile.name}}
+														</div>
+														<div class="network-listing-pin">
+															<img ng-src="{{profile.pinImage}}"/>
+															{{profile.pinLabel}}
+														</div>
+														<div class="network-profile-id1">
+															{{profile.id}}
+														</div>
+														<br>
+														<div class="row icon-button-for-medium visible-for-medium-up">
+															<div class="medium-4 left columns">
+																<a href="mailto:{{profile.email}}" ng-show="profile.email!=''"><img src="./imgs/network/mail-icon.png"  style="width:25px;height:25px"/></a>
+																<img ng-show="profile.email==''" src="./imgs/network/mail-icon-disable.png"  style="width:25px;height:25px"/>
+																<a href="tel:{{profile.phone}}" ng-show="profile.phone!=''"><img src="./imgs/network/mobi-icon.png"  style="width:25px;height:25px"/></a>
+																<img ng-show="profile.phone==''" src="./imgs/network/mobi-icon-disable.png"  style="width:25px;height:25px"/>
+
+															</div>
+														</div>
+													</div>
+													<div class="columns small-12 medium-6">
+														<div class="network-listing-pv row">
+
+															<div class="columns small-6 medium-6">
+																<img src='./imgs/icon/icon-pv.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.pv}}</font>
+															</div>
+
+															<div class="columns small-6 medium-6" >
+																<font size="2px" >{{profile.pv | number }}</font>
+															</div>
+
+														</div>
+
+														<div class="network-listing-ov row">
+															<div class="columns small-6 medium-6">
+																		<img src='./imgs/icon/icon-tv.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.tv}}</font>
+															</div>
+															<div class="columns small-6 medium-6" >
+																<font size="2px">{{profile.tv | number }}</font>
+																<br/>
+
+															</div>
+
+														</div>
+
+
+														<div class="network-listing-ov row">
+															<div class="columns small-6 medium-6">
+																			<img src='./imgs/icon/icon-ov.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.ov}}</font>
+															</div>
+															<div class="columns small-6 medium-6" >
+																<font size="2px">{{profile.ov | number }}</font>
+																<br/>
+
+															</div>
+														</div>
+
+														<div ng-if="profile.total == 0">
+														<div class="network-listing-ov row">
+															<div class="columns small-6 medium-6" align="right"  >
+
+															</div>
+
+																<div class="columns small-6 medium-6" align="left"  style="margin-right:26px" >
+
+																	<img ng-src="./imgs/stay.gif" style="width:20px;height:20px" >	<font size="2px">{{ profile.calov }} </font>
+																		<br/>
+
+																	</div>
+														</div>
+
+													</div>
+
+													<div ng-if="profile.total < 9999 && profile.total > 0 ">
+													<div class="network-listing-ov row">
+														<div class="columns small-6 medium-6" align="right"  >
+
+														</div>
+
+															<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+																<img ng-src="{{profile.icon_img}}" style="{{profile.icon_style}}" >	<font size="2px">{{ profile.calov }} </font>
+																	<br/>
+
+																</div>
+													</div>
+												</div>
+
+
+												<div ng-if="profile.total < 0 ">
+												<div class="network-listing-ov row">
+													<div class="columns small-6 medium-6" align="right"  >
+
+													</div>
+
+														<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+															<img ng-src="{{profile.icon_img}}" style="{{profile.icon_style}}" >	<font size="2px">{{ profile.calov }} </font>
+																<br/>
+
+															</div>
+												</div>
+											</div>
+
+
+												<div ng-if="profile.total > 9999">
+												<div class="network-listing-ov row">
+													<div class="columns small-6 medium-6" align="right"  >
+
+													</div>
+
+														<div class="columns small-6 medium-6" align="right"  style="margin-right:12px" >
+
+															<img ng-src="{{profile.icon_img}}" style="{{profile.icon_style}}" >	<font size="1px">{{ profile.calov }} </font>
+																<br/>
+
+															</div>
+												</div>
+											</div>
+
+
+
+
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END Network Page -->
+						<div id="page-network-depth" class="page">
+							<!-- new -->
+								<div class="profile-section row">
+								<div class="small-6 medium-3 medium-push-1 columns network-display">
+										<img class="round" ng-src="{{networkListingCtrl.depth.image}}"/>
+									<div class="row icon-button visible-for-small">
+										<div class="text-center">
+											<a href="mailto:{{networkListingCtrl.depth.email}}" ng-show="networkListingCtrl.depth.email!=''"><img src="./imgs/network/mail-icon.png" style="width:25px;height:25px"/></a>
+											<img ng-show="networkListingCtrl.depth.email==''" src="./imgs/network/mail-icon-disable.png" style="width:25px;height:25px"/>
+											<a href="tel:{{networkListingCtrl.depth.phone}}" ng-show="networkListingCtrl.depth.phone!=''"><img src="./imgs/network/mobi-icon.png" style="width:25px;height:25px"/></a>
+											<img ng-show="networkListingCtrl.depth.phone==''" src="./imgs/network/mobi-icon-disable.png" style="width:25px;height:25px"/>
+										</div>
+									</div>
+								</div>
+								<div class="small-6 medium-8 columns">
+									<div class="row">
+										<div class="small-12 columns medium-6">
+
+											<div class="network-listing-name">
+												{{networkListingCtrl.depth.name}}
+											</div>
+											<div class="network-listing-pin">
+												{{networkListingCtrl.depth.pinLabel}}
+											</div>
+											<div class="network-listing-name">
+												{{networkListingCtrl.depth.id}}
+											</div>
+
+											<div class="row icon-button-for-medium visible-for-medium-up">
+												<div class="medium-6 left columns">
+													<a href="mailto:{{networkListingCtrl.depth.email}}" ng-show="networkListingCtrl.depth.email!=''"><img src="./imgs/network/mail-icon.png"  style="width:25px;height:25px"/></a>
+													<img ng-show="networkListingCtrl.depth.email==''" src="./imgs/network/mail-icon-disable.png"  style="width:25px;height:25px"/>&nbsp&nbsp
+													<a href="tel:{{networkListingCtrl.depth.phone}}" ng-show="networkListingCtrl.depth.phone!=''"><img src="./imgs/network/mobi-icon.png"  style="width:25px;height:25px"/></a>
+													<img ng-show="networkListingCtrl.depth.phone==''" src="./imgs/network/mobi-icon-disable.png"  style="width:25px;height:25px"/>
+
+												</div>
+												</div>
+
+										</div>
+
+
+									<!--	<div class="columns small-12 medium-12  visible-for-medium-up">
+											<div class="network-listing-pv row">
+
+												<div class="columns small-8 medium-8">
+													<img src='./imgs/icon/icon-pv.png' style="width:50px;height:50px " /><font size="3px">&nbsp{{viewport.labels.pv}}</font>
+												</div>
+
+												<div class="columns small-4 medium-4" style="margin-top: 13px;">
+													<font size="2px" >{{networkListingCtrl.depth.pv | number }}</font>
+												</div>
+
+											</div>
+
+											<div class="network-listing-ov row">
+												<div class="columns small-8 medium-8">
+															<img src='./imgs/icon/icon-tv.png' style="width:50px;height:50px " /><font size="3px">&nbsp{{viewport.labels.tv}}</font>
+												</div>
+												<div class="columns small-4 medium-4" style="margin-top: 13px;">
+													<font size="2px">{{networkListingCtrl.depth.tv | number }}</font>
+													<br/>
+
+												</div>
+
+											</div>
+
+
+											<div class="network-listing-ov row">
+												<div class="columns small-8 medium-8">
+																<img src='./imgs/icon/icon-ov.png' style="width:50px;height:50px; " /><font size="3px">&nbsp{{viewport.labels.ov}}</font>
+												</div>
+												<div class="columns small-4 medium-4" style="margin-top: 13px;">
+													<font size="2px">{{networkListingCtrl.depth.ov | number }}</font>
+													<br/>
+
+												</div>
+											</div>
+										</div>-->
+
+
+
+										<!-- SMALL -->
+
+
+
+<!--
+
+										<div class="small-12 columns medium-8  visible-for-small">
+											<div class="network-listing-pv row" style="margin-bottom: 4px;">
+
+												<div class="columns small-8 ">
+													<img src='./imgs/icon/icon-pv.png' style="width:34px;height:34px " /><font size="2px">{{viewport.labels.pv}}</font>
+												</div>
+
+												<div class="columns small-4 " style="margin-top: 2px;">
+													<font size="2px">{{networkListingCtrl.depth.pv | number }}</font>
+												</div>
+
+											</div>
+
+											<div class="network-listing-ov row" style="margin-bottom: 4px;">
+												<div class="columns small-8 medium-8">
+															<img src='./imgs/icon/icon-tv.png' style="width:34px;height:34px " /><font size="2px">{{viewport.labels.tv}}</font>
+												</div>
+												<div class="columns small-4 medium-4" style="margin-top: 2px;">
+													<font size="2px" >{{networkListingCtrl.depth.tv | number }}</font>
+													<br/>
+
+												</div>
+
+											</div>
+
+
+											<div class="network-listing-ov row" style="margin-bottom: 4px;" >
+												<div class="columns small-8 medium-8">
+																<img src='./imgs/icon/icon-ov.png' style="width:34px;height:34px " /><font size="2px">{{viewport.labels.ov}}</font>
+												</div>
+												<div class="columns small-4 medium-4" style="margin-top: 2px;">
+													<font size="2px">{{networkListingCtrl.depth.ov | number }}</font>
+													<br/>
+
+												</div>
+											</div>
+										</div>
+-->
+
+
+										<!-- LARGE -->
+
+
+
+										<div class="columns small-12 medium-6">
+											<div class="network-listing-pv row">
+
+												<div class="columns small-6 medium-6">
+													<img src='./imgs/icon/icon-pv.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.pv}}</font>
+												</div>
+
+												<div class="columns small-6 medium-6" >
+													<font size="2px" >{{networkListingCtrl.depth.pv | number }}</font>
+												</div>
+
+											</div>
+
+											<div class="network-listing-ov row">
+												<div class="columns small-6 medium-6">
+															<img src='./imgs/icon/icon-tv.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.tv}}</font>
+												</div>
+												<div class="columns small-6 medium-6" >
+													<font size="2px">{{networkListingCtrl.depth.tv | number }}</font>
+													<br/>
+
+												</div>
+
+											</div>
+
+
+											<div class="network-listing-ov row">
+												<div class="columns small-6 medium-6">
+																<img src='./imgs/icon/icon-ov.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.ov}}</font>
+												</div>
+												<div class="columns small-6 medium-6" >
+													<font size="2px">{{networkListingCtrl.depth.ov | number }}</font>
+													<br/>
+
+												</div>
+											</div>
+										</div>
+
+										<div ng-if="networkListingCtrl.depth.total == 0 && networkListCtrl.depth.monthid == 2 ">
+											<div class="network-listing-ov row">
+												<div class="columns small-6 medium-6" align="right"  >
+
+												</div>
+
+													<div class="columns small-6 medium-6" align="left"  style="margin-right:26px" >
+
+															<img ng-src="./imgs/stay.gif" style="width:20px;height:20px" >&nbsp;<font size="2px">{{ networkListingCtrl.depth.calov }}</font>
+															<br/>
+
+														</div>
+											</div>
+
+										</div>
+
+										<div ng-if="networkListingCtrl.depth.total < 9999 && networkListingCtrl.depth.total > 0 ">
+										<div class="network-listing-ov row">
+											<div class="columns small-6 medium-6" align="right"  >
+
+											</div>
+
+												<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+													<img ng-src="{{networkListingCtrl.depth.icon_img}}" style="{{networkListingCtrl.depth.icon_style}}" >&nbsp;<font size="2px">{{ networkListingCtrl.depth.calov }}</font>
+
+														<br/>
+
+													</div>
+										</div>
+									</div>
+
+
+									<div ng-if="networkListingCtrl.depth.total < 0 ">
+									<div class="network-listing-ov row">
+										<div class="columns small-6 medium-6" align="right"  >
+
+										</div>
+
+											<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+												<img ng-src="{{networkListingCtrl.depth.icon_img}}" style="{{networkListingCtrl.depth.icon_style}}" >&nbsp;<font size="2px">{{ networkListingCtrl.depth.calov }}</font>
+
+													<br/>
+
+												</div>
+									</div>
+								</div>
+
+
+									<div ng-if="networkListingCtrl.depth.total > 9999">
+									<div class="network-listing-ov row">
+										<div class="columns small-6 medium-6" align="right"  >
+
+										</div>
+
+											<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+												<img ng-src="{{networkListingCtrl.depth.icon_img}}" style="{{networkListingCtrl.depth.icon_style}}" >&nbsp;<font size="1px">{{ networkListingCtrl.depth.calov }}</font>
+
+													<br/>
+
+												</div>
+									</div>
+								</div>
+
+
+
+
+
+
+
+
+									</div>
+
+
+
+
+
+
+
+								</div>
+							</div>
+							<!-- new --->
+
+	<!--
+							<div class="profile-section row">
+								<div class="small-6 columns text-center">
+									<div class="profile-picture">
+										<img class="round" ng-src="{{networkListingCtrl.depth.image}}"/>
+									</div>
+								</div>
+								<div class="small-6 columns">
+									<div class="profile-name">
+										{{networkListingCtrl.depth.name}}
+									</div>
+									<div class="network-listing-pin">
+
+										{{networkListingCtrl.depth.pinLabel}}
+									</div>
+								</div>
+
+								<div >
+									<div class="medium-4 left columns">
+										<a href="mailto:{{networkListingCtrl.depth.email}}" ng-show="networkListingCtrl.depth.email!=''"><img src="./imgs/network/mail-icon.png"  style="width:35px;height:35px"/></a>
+										<img ng-show="networkListingCtrl.depth.email==''" src="./imgs/network/mail-icon-disable.png"  style="width:35px;height:35px"/>
+										<a href="tel:{{networkListingCtrl.depth.phone}}" ng-show="networkListingCtrl.depth.phone!=''"><img src="./imgs/network/mobi-icon.png"  style="width:35px;height:35px"/></a>
+										<img ng-show="networkListingCtrl.depth.phone==''" src="./imgs/network/mobi-icon-disable.png"  style="width:35px;height:35px"/>
+
+									</div>
+								</div>
+								<div class="columns small-12 medium-6">
+									<div class="network-listing-pv row">
+
+										<div class="columns small-6 medium-6">
+											<img src='./imgs/icon/icon-pv.png' style="width:35px;height:35px " /><font size="2px">&nbsp{{viewport.labels.pv}}</font>
+										</div>
+										<div class="columns small-6 medium-6">
+											<font size="2px">{{networkListingCtrl.depth.pv | number }}</font>
+											<br/>
+
+										</div>
+
+									</div>
+
+									<div class="network-listing-ov row">
+										<div class="columns small-6 medium-6">
+													<img src='./imgs/icon/icon-tv.png' style="width:35px;height:35px " /><font size="2px">&nbsp{{viewport.labels.tv}}</font>
+										</div>
+										<div class="columns small-6 medium-6">
+											<font size="2px">{{networkListingCtrl.depth.tv | number }}</font>
+											<br/>
+
+										</div>
+
+									</div>
+
+
+									<div class="network-listing-ov row">
+										<div class="columns small-6 medium-6">
+														<img src='./imgs/icon/icon-ov.png' style="width:35px;height:35px " /><font size="2px">&nbsp{{viewport.labels.ov}}</font>
+										</div>
+										<div class="columns small-6 medium-6">
+											<font size="2px">{{networkListingCtrl.depth.ov | number }}</font>
+											<br/>
+
+										</div>
+									</div>
+								</div>
+							</div>
+-->
+								<!--<div class="home-volume-orbit-container">
+								<div class="slider">
+									<div class="row">
+										<div class='small-4 columns'>
+											<div class="volume pv-volume text-center">
+												<img src='./imgs/icon/icon-pv.png'/>
+												<center><font size="2px" color="#333333">&nbsp{{networkListingCtrl.depth.pv | number }}</font>
+														<p>
+																										<font size="4px" color="#333333">  {{ viewport.labels.pv }}
+																									</font>
+											</center></div>
+										</div>
+										<div class='small-4 columns'>
+											<div class="volume tv-volume text-center">
+												<img src='./imgs/icon/icon-tv.png'/>
+												<center><font size="2px" color="#333333">&nbsp{{networkListingCtrl.depth.tv | number }}</font>
+														<p>
+																																										<font size="4px" color="#333333">   {{ viewport.labels.tv }}
+																																											</font></center>
+											</div>
+										</div>
+
+																																									<div class='small-4 columns'>
+											<div class="volume ov-volume text-center">
+												<img src='./imgs/icon/icon-ov.png'/>
+												<center><font size="2px" color="#333333">&nbsp{{networkListingCtrl.depth.ov | number }}</font>
+													<p>
+																																												 <font size="4px" color="#333333"> {{ viewport.labels.ov }}
+																																											</font></center>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>-->
+
+							<!-- END Network Page Header : Profile -->
+							<div class="row section-header">
+								{{ viewport.labels.network }}
+							</div>
+							<div class="network-depth">
+								<div class="row" ng-repeat="profile in networkListingCtrl.networkDepth">
+									<div class="small-6 medium-3 medium-push-1 columns network-display">
+										<img class="round" ng-src="{{profile.image}}" ng-click="networkListingCtrl.displayDepth(profile)"/>
+										<div class="row icon-button visible-for-small">
+											<div class="text-center">
+												<a href="mailto:{{profile.email}}" ng-show="profile.email!=''"><img src="./imgs/network/mail-icon.png" style="width:25px;height:25px"/></a>
+												<img ng-show="profile.email==''" src="./imgs/network/mail-icon-disable.png" style="width:25px;height:25px"/>
+												<a href="tel:{{profile.phone}}" ng-show="profile.phone!=''"><img src="./imgs/network/mobi-icon.png" style="width:25px;height:25px"/></a>
+												<img ng-show="profile.phone==''" src="./imgs/network/mobi-icon-disable.png" style="width:25px;height:25px"/>
+											</div>
+										</div>
+									</div>
+									<div class="small-6 medium-8 columns">
+										<div class="row">
+											<div class="small-12 columns medium-6">
+												<div class="network-listing-name">
+													{{profile.name}}
+												</div>
+												<div class="network-listing-pin">
+													<img ng-src="{{profile.pinImage}}"/>
+													{{profile.pinLabel}}
+												</div>
+												<div class="network-listing-name">
+													{{profile.id}}
+												</div>
+
+										 	<div class="row icon-button-for-medium visible-for-medium-up">
+													<div class="medium-6 left columns">
+														<a href="mailto:{{profile.email}}" ng-show="profile.email!=''"><img src="./imgs/network/mail-icon.png"  style="width:25px;height:25px"/></a>
+														<img ng-show="profile.email==''" src="./imgs/network/mail-icon-disable.png"  style="width:25px;height:25px"/>&nbsp&nbsp
+														<a href="tel:{{profile.phone}}" ng-show="profile.phone!=''"><img src="./imgs/network/mobi-icon.png"  style="width:25px;height:25px"/></a>
+														<img ng-show="profile.phone==''" src="./imgs/network/mobi-icon-disable.png"  style="width:25px;height:25px"/>
+
+													</div>
+												</div>
+											</div>
+											<div class="columns small-12 medium-6">
+												<div class="network-listing-pv row">
+
+													<div class="columns small-6 medium-6">
+														<img src='./imgs/icon/icon-pv.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.pv}}</font>
+													</div>
+
+													<div class="columns small-6 medium-6" >
+														<font size="2px" >{{profile.pv | number }}</font>
+													</div>
+
+												</div>
+
+												<div class="network-listing-ov row">
+													<div class="columns small-6 medium-6">
+																<img src='./imgs/icon/icon-tv.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.tv}}</font>
+													</div>
+													<div class="columns small-6 medium-6" >
+														<font size="2px">{{profile.tv | number }}</font>
+														<br/>
+
+													</div>
+
+												</div>
+
+
+												<div class="network-listing-ov row">
+													<div class="columns small-6 medium-6">
+																	<img src='./imgs/icon/icon-ov.png' style="width:25px;height:25px " /><font size="2px">&nbsp{{viewport.labels.ov}}</font>
+													</div>
+													<div class="columns small-6 medium-6" >
+														<font size="2px">{{profile.ov | number }}</font>
+														<br/>
+
+													</div>
+												</div>
+
+
+												<div ng-if="profile.total == 0">
+													<div class="network-listing-ov row">
+														<div class="columns small-6 medium-6" align="right"  >
+
+														</div>
+
+															<div class="columns small-6 medium-6" align="left"  style="margin-right:26px" >
+
+																<img ng-src="./imgs/stay.gif" style="width:20px;height:20px" >	<font size="2px">{{ profile.calov }} </font>
+																	<br/>
+
+																</div>
+													</div>
+
+												</div>
+
+												<div ng-if="profile.total < 9999 && profile.total > 0 ">
+												<div class="network-listing-ov row">
+													<div class="columns small-6 medium-6" align="right"  >
+
+													</div>
+
+														<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+															<img ng-src="{{profile.icon_img}}" style="{{profile.icon_style}}" >	<font size="2px">{{ profile.calov }} </font>
+																<br/>
+
+															</div>
+												</div>
+											</div>
+
+
+											<div ng-if="profile.total < 0 ">
+											<div class="network-listing-ov row">
+												<div class="columns small-6 medium-6" align="right"  >
+
+												</div>
+
+													<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+														<img ng-src="{{profile.icon_img}}" style="{{profile.icon_style}}" >	<font size="2px">{{ profile.calov }} </font>
+															<br/>
+
+														</div>
+											</div>
+										</div>
+
+
+											<div ng-if="profile.total > 9999">
+											<div class="network-listing-ov row">
+												<div class="columns small-6 medium-6" align="right"  >
+
+												</div>
+
+													<div class="columns small-6 medium-6" align="left"  style="margin-right:12px" >
+
+														<img ng-src="{{profile.icon_img}}" style="{{profile.icon_style}}" >	<font size="1px">{{ profile.calov }} </font>
+															<br/>
+
+														</div>
+											</div>
+										</div>
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Geo Network Page -->
+						<div id="page-geonetwork" class="page">
+							<div class="webview">
+								<iframe id='map'></iframe>
+							</div>
+						</div>
+					</div>
+					<!-- End Geo Network Page -->
+
+					<!-- News Page -->
+					<div ng-controller="NewsPageController as newsPageCtrl"
+
+					ng-show="pageCtrl.checkPage('home') || pageCtrl.checkPage('news')
+					|| pageCtrl.checkPage('news-single') || pageCtrl.checkPage('instagram') ||
+                    pageCtrl.checkPage('enroll') || pageCtrl.checkPage('enroll-payment')">
+						<!-- Home Page -->
+						<div id="page-home" class="page show" ng-controller="HomePageController
+						as
+						homePageCtrl">
+							<!-- Home Page Header : Profile -->
+							<div class="profile-section row" ng-controller="ProfileHeaderController
+							as
+							profileHeaderCtrl">
+								<div class="small-6 columns text-center">
+									<div class="profile-picture" ng-click="pageCtrl.changePage('profile')">
+										<img class="round" ng-src="{{profileHeaderCtrl.profile.image}}"/>
+									</div>
+
+								</div>
+								<div class="small-6 columns">
+									<div class="profile-name" ng-click="pageCtrl.changePage('profile')">
+										{{profileHeaderCtrl.profile.name}}
+									</div>
+									<div class="profile-pin">
+										<img ng-src="{{profileHeaderCtrl.profile.pinImage}}"/>
+										{{profileHeaderCtrl.profile.pin}}
+									</div>
+								</div>
+							</div>
+							<!-- END Home Page Header : Profile -->
+							<!-- Home Page Header : Success Tracker -->
+							<div class="success-tracker-section" ng-controller="SuccessTrackerController
+							as
+							trackerCtrl">
+
+							  <div class='month-selector'>
+							    <div class='month-selector-inner'>
+							      <div class="btn-group btn-group-justified">
+							      <div class="btn btn-info active" ng-click="trackerCtrl.displayMonth1(1)" id="dmonth_1x">	{{trackerCtrl.currentData.month}}</div>
+							      <div class="btn btn-primary" ng-click="trackerCtrl.displayMonth1(2)" id="dmonth_2x">	{{trackerCtrl.currentData.month_1}}</div>
+							      <div class="btn btn-primary" ng-click="trackerCtrl.displayMonth1(3)" id="dmonth_3x">	{{trackerCtrl.currentData.month_2}}</div>
+							    </div>
+
+							    </div>
+							  </div>
+							  <div class="home-volume-orbit-container"><p>
+							    <div class="slider">
+							      <div>
+							        <div class='small-4 columns'>
+							          <div class="volume pv-volume text-center">
+							            <img src='./imgs/icon/icon-pv.png'/>
+							            <center><font size="2px" color="#333333">&nbsp{{trackerCtrl.currentData.pv1 | number}}</font>
+							              <p>
+							                                        <font size="4px" color="#333333">  {{ viewport.labels.pv   }}
+							                                      </font>
+							          </center></div>
+							        </div>
+							        <div class='small-4 columns'>
+							          <div class="volume tv-volume text-center">
+							            <img src='./imgs/icon/icon-tv.png'/>
+							            <center><font size="2px" color="#333333">&nbsp{{trackerCtrl.currentData.tv1 | number}}</font>
+							              <p>
+							                                                                        <font size="4px" color="#333333">   {{ viewport.labels.tv  }}
+							                                                                          </font></center>
+							          </div>
+							        </div>
+
+							        <div class='small-4 columns'>
+							          <div class="volume ov-volume text-center">
+							            <img src='./imgs/icon/icon-ov.png'/>
+							            <center><font size="2px" color="#333333">&nbsp{{trackerCtrl.currentData.ov1 | number}}</font>
+							              <p>
+							                                                                             <font size="4px" color="#333333"> {{ viewport.labels.ov }}
+							                                                                          </font>
+							                                                                        </center>
+							          </div>
+
+							        </div>
+							      </div>
+
+
+
+							      <div>
+							        <div class='small-4 columns'>
+
+							        </div>
+							        <div class='small-4 columns'>
+
+							        </div>
+
+							        <div class='small-4 columns'>
+							          <center>		<img src="{{trackerCtrl.currentData.icon_img}}" style="{{trackerCtrl.currentData.icon_style}}" class="{{trackerCtrl.currentData.hide}}"> {{ trackerCtrl.currentData.calov }}<p></center>
+
+							        </div>
+							      </div>
+
+
+
+
+
+
+							    </div>
+							  </div>
+							  <!-- END Volume Slider Container -->
+							</div>
+							<!-- END Home Page Header : Success Tracker -->
+							<!-- Home Page Header : Network -->
+							<div class='network-section' ng-controller="HomeNetworkController
+							as
+							homeNetworkCtrl" >
+								<div class="row section-header">
+									{{ viewport.labels.network }}
+								</div>
+
+								<div class="row network-slider-container">
+									<div class="slider">
+										<div class="network-profile" ng-repeat="profile in homeNetworkCtrl.network">
+											<div class="network-profile-thumbnail"  ng-click="homeNetworkCtrl.displayDepth(profile)">
+                                            <img ng-src="{{profile.image}}"/>
+                                            </div>
+
+											<div class="network-profile-name">
+												{{profile.name}}
+											</div>
+											<div class="network-listing-pin">
+												{{profile.pinLabel}}
+											</div>
+											<div class="network-profile-id1">
+												{{profile.id}}
+											</div>
+											<br>
+											<div class="network-profile-tracker">
+												<div class="network-pv">
+													{{ viewport.labels.pv }} {{profile.pv | number }}
+												</div>
+												<div class="network-ov">
+													{{ viewport.labels.tv }} {{profile.tv | number }}
+												</div>
+
+												<div class="network-ov">
+													{{ viewport.labels.ov }} {{profile.ov | number }}
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<!-- END Network Silder -->
+								</div>
+
+								<div class="row">
+									<div class="small-6 columns network-button" ng-click="pageCtrl.changePage('enroll')">
+										{{ viewport.labels.enroll }} <img src="./imgs/network/regis-icon.png"/>
+									</div>
+									<div class="small-6 columns network-button" ng-click="pageCtrl.changePage('prospect')">
+										{{ viewport.labels.sharing }} <img src="./imgs/network/pros-icon.png"/>
+									</div>
+								</div>
+
+							</div>
+							<!-- END Home Page Header : Network -->
+
+							<!-- Home Page Header : News -->
+							<div class="news-section" ng-controller="HomeNewsController
+							as
+							homeNewsCtrl">
+								<div class="row section-header">
+									{{ viewport.labels.hot_news }}
+								</div>
+								<div class="news-feed">
+									<div class="news" ng-repeat="(i,news) in homeNewsCtrl.news">
+										<img ng-src="{{news.thumbnail}}"  ng-click="newsPageCtrl.showSingle(i);"/>
+										<div class="news-header text-center">
+											{{news.title}}
+										</div>
+										<div class="news-content text-center" ng-bind-html="news.excerpt">
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END Home Page Header : News -->
+
+							<!-- Home Page Header : Shopping -->
+							<div class="shopping-section" ng-controller="HomeProductController
+							as
+							homeProductCtrl">
+								<div class="row section-header">
+									{{ viewport.labels.shopping }}
+								</div>
+								<div class="shopping-products" ng-controller="ShoppingPageController
+								as
+								shoppingPageCtrl">
+									<div class="shopping-products-slider">
+										<div class="product" ng-repeat="product in homeProductCtrl.data">
+											<div class="product-detail" ng-click="shoppingPageCtrl.addToCart(product.id, true)">
+												<img ng-src="{{product.thumbnail}}"/>
+												<a class="add-to-cart"></a>
+												<div class="product-name text-center">
+													{{product.title}}
+												</div>
+												<div class="product-description text-center" ng-bind-html="product.content">
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<!-- END Home Page Header : Shopping -->
+
+							<!-- Home Page Header : Instagram -->
+							<div class="instagram-section" ng-controller="HomeInstagramController
+							as
+							igCtrl">
+								<div class="row section-header" ng-click="igCtrl.openUserLink()">
+									{{ viewport.labels.instagram }}
+								</div>
+								<div id="instafeed" class="row">
+
+								</div>
+							</div>
+							<!-- END Home Page Header : Instagram -->
+						</div>
+						<!-- END Home Page -->
+						<!-- Instagram Page -->
+						<div id="page-instagram" class="page">
+							<div class="webview">
+								<img id="instagram-enlarge"/>
+							</div>
+						</div>
+						<!-- END Instagram Page -->
+						<!-- Enroll Page -->
+						<div id="page-enroll" class="page">
+							<div class="enroll-disclaimer">
+                                {{ viewport.labels.more_info }}
+							</div>
+							<div class="enroll-form" ng-controller="EnrollerController as enrollerCtrl">
+								<form class="enroller-form" name="enroller_form" ng-submit="enrollerCtrl.enrollSubmit()">
+								<!--<div class="enroller-form" name="enroller_form" ng-form>-->
+									<div class="verify-enroll form">
+										<div class="row verify-enroll-enroller">
+											<div class="columns small-12">
+                                                                                                    <input type="text" class="round text-center" id="enroller-id" name="enroller-id" placeholder="{{ viewport.labels.enroller }} :" ng-model="enrollerCtrl.formData.enroller"
+												pattern="[0-9]*" required/>
+											</div>
+										</div>
+										<div class="row verify-enroll-enroller-name text-center">
+										</div>
+										<div class="row verify-enroll-sponsor">
+											<div class="columns small-12">
+												<input type="text" class="round text-center" id="sponsor-id" name="sponsor-id" placeholder="{{ viewport.labels.sponsor }} :" ng-model="enrollerCtrl.formData.sponsor"
+												pattern="[0-9]*" required/>
+											</div>
+										</div>
+										<div class="row verify-enroll-sponsor-name text-center">
+										</div>
+										<div class="row verify-enroll-submit">
+											<div class="columns medium-6 medium-centered">
+												<input type="button" id="verify-enroller-submit" class="expand round button verify-enroll-button" value="{{ viewport.labels.verify_enroller }}" ng-click="enrollerCtrl.verifyBANumber()"/>
+											</div>
+										</div>
+									</div>
+									<div class="verified-enroll">
+										<div class="section-header">
+	                                        {{ viewport.labels.information }}
+										</div>
+
+										<div class="tax-enroll form">
+											<div class="row tax-enroll">
+												<div class="columns small-12">
+													<input type="tel" class="round text-center" name="id-card" id="id-card" placeholder="{{ viewport.labels.id_card }}	: " ng-model="enrollerCtrl.formData.taxId"
+													pattern="[0-9]*"  maxlength="13" ng-maxlength="13" required />
+												</div>
+											</div>
+
+											<div class="row tax-enroll hide">
+												<div class="columns small-12">
+													<input type="text" class="round text-center" name="passport" placeholder="{{ viewport.labels.passport }} :" ng-model="enrollerCtrl.formData.passport" />
+												</div>
+											</div>
+											<div class="row tax-enroll">
+												<div class="columns medium-6 medium-centered">
+													<input type="button" class="expand round button tax-enroll-button" value="{{ viewport.labels.verify_id }}" ng-click="enrollerCtrl.verifyTaxID()"  />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tax-verified-enroll">
+
+										<div class="information-enroll editor-container form">
+											<!--<div class="row information-enroll full-width-input">
+												<div class="small-2 columns">
+													<label for="first_name_th" class="right"> <img src="./imgs/profile-editor/name.png"/> </label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="first_name_th" ng-model="enrollerCtrl.formData.firstNameTH" placeholder="{{ viewport.labels.first_name_th }}*:"
+													maxlength="23" required ng-required="true" ng-maxlength="23"/>
+
+												</div>
+											</div>
+											<div class="row information-enroll full-width-input">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="last_name_th" ng-model="enrollerCtrl.formData.lastNameTH" placeholder="{{ viewport.labels.last_name_th }}*:"
+													maxlength="23" required ng-required="true" ng-maxlength="23"/>
+												</div>
+											</div>-->
+											<div class="row information-enroll full-width-input">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="first_name_en" ng-model="enrollerCtrl.formData.firstNameEN" placeholder="{{ viewport.labels.first_name_en }}*:"
+													maxlength="23" required ng-required="true" ng-maxlength="23"/>
+												</div>
+											</div>
+											<div class="row information-enroll full-width-input">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="last_name_en" ng-model="enrollerCtrl.formData.lastNameEN" placeholder="{{ viewport.labels.last_name_en }}*:"
+													maxlength="23" required ng-required="true" ng-maxlength="23"/>
+												</div>
+											</div>
+
+											<div class="row information-enroll full-width-input">
+												<div class="small-2 columns">
+													<label for="first_name_th" class="right">   {{ viewport.labels.gender }} </label>
+												</div>
+												<div class="small-10 columns">
+
+																	<select id="ggender" ng-model="formData.gender" required ng-required="true">
+																	<option value="male" selected>
+																		{{ viewport.labels.male }}
+																	</option>
+																	<option value="female" >
+																			{{ viewport.labels.female }}
+																	</option>
+															</select>
+
+
+												</div>
+											</div>
+
+											<div class="row information-enroll dob full-width-input">
+												<div class="small-2 columns">
+	                                                {{ viewport.labels.birth_day }}*:
+												</div>
+												<div class="small-3 columns">
+													<select id="dob-month" ng-model="enrollerCtrl.formData.dob.month"
+													required ng-required="true">
+														<option ng-repeat="month in enrollerCtrl.date.month" value="month.value"> {{month.label}} </option>
+													</select>
+												</div>
+												<div class="small-3 columns">
+													<select id="dob-date" ng-model="enrollerCtrl.formData.dob.day" required ng-required="true">
+														<option ng-repeat="day in enrollerCtrl.date.day" value="day"> {{day}} </option>
+													</select>
+												</div>
+												<div class="small-4 columns">
+													<select id="dob-year" ng-model="enrollerCtrl.formData.dob.year" required ng-required="true">
+														<option ng-repeat="year in enrollerCtrl.date.year" value="year"> {{year}} </option>
+													</select>
+												</div>
+											</div>
+											<div class="row full-width-input dob">
+												<div class="small-12 columns dob-description">
+	                                                {{ viewport.labels.years20 }}
+												</div>
+											</div>
+										</div>
+										<div class="section-header">
+											{{viewport.labels.address}}
+										</div>
+										<div class="address-enroll editor-container form">
+											<div class="row">
+												<div class="small-12 columns">
+													<select class="round" id="province-selector" ng-model="enrollerCtrl.formData.province" ng-change="enrollerCtrl.changeProvince()" required ng-required="true">
+														<option disabled="" >{{ viewport.labels.province }}*:</option>
+														<option ng-repeat="province in enrollerCtrl.province"> {{province}} </option>
+													</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="small-2 columns">
+													<label for="" class="right"> <img src="./imgs/profile-editor/location.png"/> </label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="address" ng-model="enrollerCtrl.formData.address" placeholder="{{ viewport.labels.address }}*:"  maxlength="30" required ng-required="true" ng-maxlength="30"/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="road" ng-model="enrollerCtrl.formData.road" placeholder="{{ viewport.labels.road }}*:" maxlength="10" required ng-required="true" ng-maxlength="10"/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="subarea" ng-model="enrollerCtrl.formData.subArea" placeholder="{{ enrollerCtrl.labelSubArea }}*:" maxlength="20" required ng-required="true" ng-maxlength="20"/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="area" ng-model="enrollerCtrl.formData.area" placeholder="{{ enrollerCtrl.labelArea }}:" maxlength="20" required ng-required="true" ng-maxlength="20"/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="text" id ="country"  ng-model="enrollerCtrl.formData.country" placeholder="{{ viewport.labels.country }}:" disabled/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="small-2 columns">
+													<label for="" class="right"></label>
+												</div>
+												<div class="small-10 columns">
+													<input type="tel" id="zip" name="zip" ng-model="enrollerCtrl.formData.zip" placeholder="{{ viewport.labels.zip }}*:" pattern="[0-9]{5}" maxlength="5" ng-maxlength="5" required ng-required="true"/>
+												</div>
+											</div>
+										</div>
+										<div class="section-header">
+	                                        {{ viewport.labels.contact_info }}
+										</div>
+										<div class="contact-enroll editor-container form">
+											<div class="row full-width-input">
+												<div class="small-2 columns">
+													<label for="" class="right"> <img src="./imgs/profile-editor/phone.png"/> </label>
+												</div>
+												<div class="small-10 columns">
+													<input type="tel" id="phone" ng-model="enrollerCtrl.formData.phone" placeholder="{{ viewport.labels.phone }}*:" pattern="[0-9]{5,12}" maxlength="12" ng-maxlength="12" required ng-required="true"/>
+												</div>
+											</div>
+											<div class="row full-width-input">
+												<div class="small-2 columns">
+													<label for="" class="right"> <img src="./imgs/profile-editor/email.png"/> </label>
+												</div>
+												<div class="small-10 columns">
+													<input type="email" id="email" ng-model="enrollerCtrl.formData.email" placeholder="{{ viewport.labels.email }}*:" required ng-required="true"/>
+												</div>
+											</div>
+										</div>
+										<div class="section-header">
+											{{viewport.labels.ship_method}}
+										</div>
+										<div class="shipping-enroll form">
+											<div class="row ">
+												<select id="enroll-shipment-method" ng-model="enrollerCtrl.formData.shipment" required ng-required="true">
+													<option value="2">{{viewport.labels.enroll_delivery}}</option>
+													<option value="3" selected>{{viewport.labels.enroll_pickup}}</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="small-12 columns medium-6 medium-centered">
+
+												<input id="enroll-submit-verify" type="submit" class="button round expand" value="Verify All"/>
+												<a id="enroll-submit-url" ng-show="enrollerCtrl.submit_ready" class="button round expand success" ng-click="enrollerCtrl.linkPayment()"
+												>{{ viewport.labels.continue }}</a>
+											</div>
+										</div>
+									</form>
+									<!--</div>-->
+								</div>
+							</div>
+						</div>
+						<!-- END Enroll Page -->
+                        <div id="page-enroll-payment" class="page">
+                            <div class="webview">
+                                <iframe id='enroll-payment-gateway'></iframe>
+                            </div>
+                        </div>
+						<!-- News Page -->
+						<div id="page-news" class="page">
+							<div class="news-section">
+								<div class="news-feed">
+									<div class="news" ng-repeat="(i, news) in newsPageCtrl.news">
+										<div>
+											<img ng-src="{{news.thumbnail}}" ng-click="newsPageCtrl.showSingle(i);"/>
+										</div>
+
+										<div class="news-header text-center">
+											{{news.title}}
+										</div>
+										<div class="news-content text-center" ng-bind-html="news.excerpt"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="page-news-single" class="page">
+							<div class="news-single">
+								<div ng-hide="newsPageCtrl.single.embed_video!=null">
+									<img width="100%" ng-src="{{newsPageCtrl.single.thumbnail}}"/>
+								</div>
+								<div ng-show="newsPageCtrl.single.embed_video!=null" class="play-youtube">
+									<img width="100%" ng-src="{{newsPageCtrl.single.thumbnail}}" ng-click="newsPageCtrl.openYoutube(newsPageCtrl.single.embed_video)"/>
+									<!--<iframe width="560" height="315" ng-src="{{newsPageCtrl.single.embed_video}}" frameborder="0" allowfullscreen></iframe>-->
+								</div>
+								<div class="news-header text-center">
+									{{newsPageCtrl.single.title}}
+								</div>
+								<div class="news-content" ng-bind-html="newsPageCtrl.single.content"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- END News Page -->
+
+					<!-- Shopping Page -->
+					<div id="page-shopping" class="page" ng-controller="ShoppingPageController
+					as
+					shoppingPageCtrl">
+						<div class="products-page">
+							<div class="row">
+								<ul class="tabs" data-tab>
+									<!--<li class="tab-title text-center small-4 product-easyship ">
+										<a ng-click="shoppingPageCtrl.changeTab('product-easyship')" style="text-decoration:none;"> Easy Ship </a>
+									</li>-->
+									<li class="tab-title text-center small-6 product-category">
+										<a ng-click="shoppingPageCtrl.changeTab('product-category')" style="text-decoration:none;"> {{viewport.labels.categories}} </a>
+									</li>
+									<li class="tab-title text-center small-6 product-all active">
+										<a ng-click="shoppingPageCtrl.changeTab('product-all')" style="text-decoration:none;"> {{viewport.labels.all}} </a>
+									</li>
+								</ul>
+							</div>
+							<div class="tabs-content">
+								<div class="content" id="product-all">
+									<div class="products-listing row" id="product-list-all">
+										<div ng-repeat="(i,product) in shoppingPageCtrl.shownProducts" ng-class="product.product_cat + ' small-12 columns medium-6 product'" id="product-{{product.id}}">
+											<div class="row">
+												<div class="product-image columns small-12 text-center">
+													<img ng-src="{{product.thumbnail}}"/>
+												</div>
+												<div class="product-detail columns small-12">
+													<div class="row">
+														<div class="product-name columns small-6">
+															{{product.name}}
+														</div>
+														<div class="product-price columns small-3">
+															{{product.price| currency:'' }} PHP
+														</div>
+														<div class="product-pv columns small-3">
+															{{product.pv}} {{viewport.labels.pv}}
+														</div>
+													</div>
+													<div class="row">
+
+														<div class="product-description columns small-12" ng-bind-html="product.desc">
+
+														</div>
+													</div>
+
+													<form class="row">
+														<div class="small-6 columns">
+															<div class="product-label">
+																<label class="inline" for="quantity">Qty</label>
+															</div>
+															<div class="product-quantity">
+																<select name="quantity" id="qty-{{product.id}}">
+																	<option value='1' selected>1</option>
+																	<option value='2'>2</option>
+																	<option value='3'>3</option>
+																	<option value='4'>4</option>
+																	<option value='5'>5</option>
+																	<option value='6'>6</option>
+																	<option value='7'>7</option>
+																	<option value='8'>8</option>
+																	<option value='9'>9</option>
+																	<option value='10'>10</option>
+																</select>
+
+															</div>
+														</div>
+														<div class="small-6 columns">
+															<button class="round product-add-to-cart" ng-click="shoppingPageCtrl.addToCart(product.id)">
+																{{viewport.labels.add_to_cart}}
+															</button>
+															<div class="feedback"></div>
+														</div>
+													</form>
+												</div>
+												<div class="border-line small-12 visible-for-small columns"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="content" id="product-category">
+									<div class="category-listing">
+										<ul>
+											<li ng-repeat="category in shoppingPageCtrl.categories" ng-click="shoppingPageCtrl.filterProducts(category.slug);">
+												<a data-href="{{category.slug}}" style="text-decoration:none;"> {{category.name}} </a>
+											</li>
+										</ul>
+
+									</div>
+								</div>
+								<div class="content active" id="product-easyship">
+									<div class="products-listing row">
+										<div ng-repeat="(i,product) in shoppingPageCtrl.easyships" ng-class="product.product_cat + ' small-12 columns medium-6  product'" id="product-{{product.id}}">
+											<div class="row">
+												<div class="product-image columns small-12 text-center">
+													<img ng-src="{{product.thumbnail}}"/>
+												</div>
+												<div class="product-detail columns small-12">
+													<div class="row">
+														<div class="product-name columns small-6">
+															{{product.name}}
+														</div>
+														<div class="product-price columns small-3">
+															{{product.price| currency:'' }} PHP
+														</div>
+														<div class="product-pv columns small-3">
+															{{product.pv}} {{viewport.labels.pv}}
+														</div>
+													</div>
+													<div class="row">
+														<div class="product-description columns small-12" ng-bind-html="product.desc">
+
+														</div>
+													</div>
+													<form class="row">
+														<div class="small-6 columns">
+															<div class="product-label">
+																<label class="inline" for="quantity">Qty</label>
+															</div>
+															<div class="product-quantity">
+																<select name="quantity" id="qty-{{product.id}}">
+																	<option value='1' selected>1</option>
+																	<option value='2'>2</option>
+																	<option value='3'>3</option>
+																	<option value='4'>4</option>
+																	<option value='5'>5</option>
+																	<option value='6'>6</option>
+																	<option value='7'>7</option>
+																	<option value='8'>8</option>
+																	<option value='9'>9</option>
+																	<option value='10'>10</option>
+																</select>
+															</div>
+														</div>
+														<div class="small-6 columns">
+															<button class="round product-add-to-cart" ng-click="shoppingPageCtrl.addToCart(product.id)">
+																{{viewport.labels.add_to_cart}}
+															</button>
+															<div class="feedback"></div>
+														</div>
+													</form>
+												</div>
+												<div class="border-line small-12 columns"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!-- END Shopping Page -->
+					<!-- Cart Page -->
+					<div id="page-cart" class="page" ng-controller="CartPageController
+					as
+					cartPageCtrl">
+						<div class="row section-header">
+							Your cart
+						</div>
+						<div class='cart-listing'>
+							<div class='cart-product row' ng-repeat="(id,product) in cartPageCtrl.cart.products">
+								<div class="columns small-3 medium-3">
+									<img ng-src="{{product.thumbnail}}"/>
+								</div>
+								<div class="columns small-6 medium-6">
+									<div class='cart-product-price'>
+										{{product.price| currency:'' }} PHP
+									</div>
+									<div class='cart-product-title'>
+										{{product.name}}
+									</div>
+									<div class='cart-product-desc' ng-bind-html="product.desc"></div>
+									<div class='cart-product-pv'>
+										{{product.pv}} {{viewport.labels.pv}}
+									</div>
+								</div>
+								<div class="columns small-3 medium-3">
+									<div class='cart-product-qty'>
+										Qty: {{product.qty}}
+									</div>
+									<div class='cart-product-delete'>
+										<img src='./imgs/cart/trash-icon.png' ng-click="cartPageCtrl.removeProduct(id)"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='cart-total row'>
+							<div class='columns small-7 small-offset-3'>
+								<div>
+									{{viewport.labels.total}} :
+									<span class="right cart-total-price"> {{cartPageCtrl.cart.totalPrice| currency:'' }} PHP </span>
+
+								</div>
+								<div class="right cart-total-price">
+									{{cartPageCtrl.cart.totalPV}} {{viewport.labels.pv}}
+								</div>
+							</div>
+						</div>
+
+
+						<div class='cart-shipping-method row' id="periodmm_cs">
+							<div class='columns small-7 small-offset-3'>
+								<div>
+									{{viewport.labels.period_month}}
+
+									<select class="right" name="periodmm" id="periodmm">
+
+									</select>
+
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class='cart-shipping-method row'>
+							<div class='columns small-7 small-offset-3'>
+								<div>
+									{{viewport.labels.ship_method}}
+
+									<select class="right" name="cart-shipping" id="cart-shipping-method" ng-model="cartPageCtrl.shippingMethod" ng-change="cartPageCtrl.shippingMethodChanged()">
+										<option value="3"> {{viewport.labels.pickup}} </option>
+										<option value="2"> {{viewport.labels.delivery}} </option>
+									</select>
+
+								</div>
+							</div>
+						</div>
+						<div class="cart-shipping-billing">
+							<div class="row section-header" ng-click="cartPageCtrl.toggleShippingForm();">
+                                {{viewport.labels.ship_to}} <img id="ship-to-icon-label" src="./imgs/back-icon.png"/>
+							</div>
+							<form id="shipping-form" class="editor-container">
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/name.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-name" id="shipping_name" ng-model="cartPageCtrl.shipping.name" placeholder="Name..."/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/location.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-address1" id="shipping_address1" ng-model="cartPageCtrl.shipping.addr1" placeholder="Address 1"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/location.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-address2" id="shipping_address2" ng-model="cartPageCtrl.shipping.addr2" placeholder="Address 2"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/location.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-city" id="shipping_city" ng-model="cartPageCtrl.shipping.city" placeholder="City"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/email.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="email" name="shipping-email" id="shipping_email" ng-model="cartPageCtrl.shipping.email" placeholder="Email"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/location.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-state" id="shipping_state" ng-model="cartPageCtrl.shipping.state" placeholder="State"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+
+									</div>
+									<div class="small-10 columns">
+										<input type="tel" name="shipping-zip" id="shipping_zip" ng-model="cartPageCtrl.shipping.zip" placeholder="Zip" pattern="[0-9]{5}" maxlength="5" ng-maxlength="5"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-country" id="shipping_country" ng-model="cartPageCtrl.shipping.country" placeholder="Country"/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="small-2 columns">
+										<img src="./imgs/profile-editor/phone.png"/>
+									</div>
+									<div class="small-10 columns">
+										<input type="text" name="shipping-phone" id="shipping_phone" ng-model="cartPageCtrl.shipping.phone" placeholder="Phone"/>
+									</div>
+								</div>
+							</form>
+							<div class="row section-header hide" ng-click="cartPageCtrl.toggleBillingForm();">
+								Bill To
+							</div>
+							<form id="billing-form" class="hide">
+								<div class="row">
+									<input type="text" name="billing-name" ng-model="cartPageCtrl.billing.name" placeholder="Name..."/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-address1" ng-model="cartPageCtrl.billing.addr1" placeholder="Address 1"/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-address2" ng-model="cartPageCtrl.billing.addr2" placeholder="Address 2"/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-city" ng-model="cartPageCtrl.billing.city" placeholder="City"/>
+								</div>
+								<div class="row">
+									<input type="email" name="billing-email" ng-model="cartPageCtrl.billing.email" placeholder="Email"/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-state" ng-model="cartPageCtrl.billing.state" placeholder="State"/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-zip" ng-model="cartPageCtrl.billing.zip" placeholder="Zip"/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-country" ng-model="cartPageCtrl.billing.country" placeholder="Country"/>
+								</div>
+								<div class="row">
+									<input type="text" name="billing-phone" ng-model="cartPageCtrl.billing.phone" placeholder="Phone"/>
+								</div>
+							</form>
+
+						</div>
+						<div class="cart-payment row">
+
+							<div class="small-12 medium-6 medium-centered columns">
+								<a id="cart-primary-button" class='button round expand' ng-click="cartPageCtrl.order();" style="text-decoration:none;"> {{viewport.labels.checkout}} </a>
+							</div>
+						</div>
+					</div>
+					<!-- END Cart Page -->
+					<!-- Payment Page -->
+					<div id="page-payment" class="page">
+						<div class="webview">
+							<iframe id='payment-gateway'></iframe>
+						</div>
+					</div>
+					<!-- End Payment Page -->
+
+					<!-- Prospect Page -->
+					<div class="page" ng-controller="ProspectPageController
+					as
+					prospectPageCtrl"  ng-show="pageCtrl.checkPage('prospect') || pageCtrl.checkPage('prospect-single')">
+						<div id="page-prospect" class="page" >
+							<div class="prospect-section">
+								<div class="prospect-feed">
+									<div class="prospect" ng-repeat="(i, prospect) in prospectPageCtrl.data">
+										<img ng-src="{{prospect.thumbnail}}" ng-click="prospectPageCtrl.showSingle(i);"/>
+										<div class="prospect-header text-center">
+											{{prospect.title}}
+										</div>
+										<div class="prospect-content text-center" ng-bind-html="prospect.excerpt">
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END Prospect Page -->
+						<div id="page-prospect-single" class="page">
+							<div class="prospect-single">
+								<div class="section-header">
+                                    {{viewport.labels.share}}
+								</div>
+								<div class="row">
+									<a class="small-6 columns share-button" style="text-decoration: none;" ng-click="prospectPageCtrl.shareFacebookLink(prospectPageCtrl.single.link, prospectPageCtrl.single.title, prospectPageCtrl.single.content)">{{viewport.labels.facebook}}</a>
+									<a class="small-6 columns share-button" style="text-decoration: none;" ng-click="prospectPageCtrl.shareSMS(prospectPageCtrl.single.link)">{{viewport.labels.sms}}</a>
+								</div>
+								<div ng-hide="prospectPageCtrl.single.embed_video!=null">
+									<img width="100%" ng-src="{{prospectPageCtrl.single.thumbnail}}"/>
+								</div>
+								<div ng-show="prospectPageCtrl.single.embed_video!=null" class="play-youtube">
+									<img width="100%" ng-src="{{prospectPageCtrl.single.thumbnail}}" ng-click="prospectPageCtrl.openYoutube(prospectPageCtrl.single.embed_video)"/>
+									<!--<iframe width="560" height="315" ng-src="{{prospectPageCtrl.single.embed_video}}" frameborder="0" allowfullscreen></iframe>-->
+								</div>
+
+								<div class="prospect-header text-center">
+									{{prospectPageCtrl.single.title}}
+								</div>
+								<div class="prospect-content text-center" ng-bind-html="prospectPageCtrl.single.content"></div>
+
+							</div>
+						</div>
+						<!-- Geo Network Page -->
+						<div id="page-fb-sharer" class="page">
+							<div class="webview">
+								<iframe id='fb-share'></iframe>
+							</div>
+						</div>
+						<!-- End Geo Network Page -->
+
+					</div>
+
+					<!-- Register Page -->
+					<div id="page-register" ng-class="pageCtrl.checkPage('register')?'page show':'page'">
+
+					</div>
+					<!-- END Register Page -->
+					<!-- Setting Page -->
+
+					<div id="page-setting" class="page">
+						<div class="row" ng-controller="settingController as settingCtrl">
+							<div class="small-12 columns">
+								<select id="language-selector"
+								ng-model="settingCtrl.selectedLanguage"
+								ng-change="settingCtrl.changeLanguage();"
+								>
+									<option ng-repeat="(i,language) in settingCtrl.languages" value="{{i}}" ng-selected='i==settingCtrl.selectedLanguage'>{{language}}</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+
+					<!-- END Setting Page -->
+
+					<div id="page-report" class="page" ng-controller="reportController as reportCtrl">
+						<div class="row">
+                            <ul class="tabs" data-tab>
+                                <li class="tab-title text-center small-4 report-tab ">
+                                    <a ng-click="reportCtrl.loadReport('genealogy');">{{viewport.labels.report_genealogy}}</a>
+                                </li>
+                                <li class="tab-title text-center small-4 report-tab">
+                                    <a ng-click="reportCtrl.loadReport('commission');">{{viewport.labels.report_commission}}</a>
+                                </li>
+                                <li class="tab-title text-center small-4 report-tab active">
+                                    <a ng-click="reportCtrl.loadReport('order');">{{viewport.labels.report_order}}</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+												<div align=center>
+
+
+
+												    <div  id="statement-view" class="report-container">
+
+												  <div id='orderselect'>
+															<br>
+												    <!--<input type="text" id="date_form" value="2015-02-01" />-->
+
+															<form name="someform">
+												        <div class="profile-month-selector">
+												            <div class="btn-group" role="group" aria-label="...">
+												        <button type="button" id="history1"  ng-click="reportCtrl.orderhistory(1)"  class="btn btn-primary">1 Month</button>
+												          <button type="button" id="history2"  ng-click="reportCtrl.orderhistory(3)" class="btn btn-default">3 Months</button>
+												            <button type="button" id="history3"  ng-click="reportCtrl.orderhistory(6)" class="btn btn-default">6 Months</button>
+												              </div>
+												                </div>
+
+												    </form>
+
+												  </div>
+												  <div class="row" id='orderhistory1'>
+														<div >
+															<div >
+																<div class="row">
+
+
+																		 <div class="reportorder" ng-repeat="(i, reportorder) in reportCtrl.orderlist" >
+																			 <a href="#" ng-click="reportCtrl.orderhistorydetail(reportorder.href)" class="list-group-item">
+																				<div class="row" style="padding-left:75px" >
+
+
+																				 <div class="col-xs-12 " >
+
+																					 <div class="row" >
+																								 <div class="col-xs-6 " align="left" >
+																									 <h6>{{viewport.labels.order_number}}</h6><h4>	{{reportorder.orderid}}</h4>
+																									 <h6>	{{viewport.labels.order_date}}&nbsp;:&nbsp;{{reportorder.date}}
+																				 </h6>
+																								 </div>
+
+																								 <div class="col-xs-6 " align="left" >
+																									 <button class="btn btn-primary" type="button" style="width:125px">
+																										 PHP <span class="badge">{{reportorder.total  }}</span>
+																										 </button>
+																								 </div>
+																					 </div>
+
+
+
+																				 </div>
+																			</div>
+																			</a>
+									 									</div>
+
+
+
+
+
+
+
+
+																	 </div>
+
+
+																 </div>
+
+												  </div>
+												</div>
+												  <div class="row hide " id='orderhistorydetail1'>
+
+
+																												<nav>
+														  <ul class="pager" style="padding-right: 25px;">
+														    <li class="previous"><a href="#" ng-click="reportCtrl.backhistory()"><span aria-hidden="true">&larr;</span> Back </a></li>
+														  </ul>
+														</nav>
+
+
+
+
+														<div data-example-id="simple-list-group" ng-repeat="(i, orderdetail) in reportCtrl.detail" class="orderdetail">
+															<div class="row section-header">
+															 {{viewport.labels.report_order}}
+															</div>
+															<br>
+															<div class="row">
+																	<div class="col-xs-12 " >
+																		<div class="row">
+																			<div class="col-xs-6 " align="right">
+																				 {{viewport.labels.order_date}}
+																			</div>
+																			<div class="col-xs-6 " align="left">
+																				{{orderdetail.invoicedate}}
+																			</div>
+																		</div>
+
+																		<div class="row">
+																			<div class="col-xs-6" align="right">
+																		 {{viewport.labels.order_number}}
+																			</div>
+																			<div class="col-xs-6 " align="left">
+																					{{orderdetail.invoiceid}}
+																			</div>
+																		</div>
+
+																		<div class="row">
+																			<div class="col-xs-6 " align="right">
+																		 	Period
+																			</div>
+																			<div class="col-xs-6 " align="left">
+																				{{orderdetail.pvdate}}
+																			</div>
+																		</div>
+
+
+																		<div class="row">
+																			<div class="col-xs-6 " align="right">
+																		Initial
+																			</div>
+																			<div class="col-xs-6 " align="left">
+																				{{orderdetail.initial}}
+																			</div>
+																		</div>
+																				<br>
+																		<div class="row">
+																			<div class="col-xs-6 " align="left" style="padding-left: 45px;padding-right: -15px;">
+																			<h5>	 {{viewport.labels.bill_to}}	<br>		{{orderdetail.leftname}}<br>
+														{{orderdetail.leftaddress}} <br>	{{orderdetail.leftaddress2}} &nbsp;{{orderdetail.leftcity}} &nbsp;{{orderdetail.leftcountry}} &nbsp;{{orderdetail.leftzip}}<br>&nbsp;{{orderdetail.leftmobile}} </h5>
+																			</div>
+																			<div class="col-xs-6 " align="left" >
+																			<h5>	 {{viewport.labels.ship_to}}	<br>{{orderdetail.rightname}}<br>
+																				{{orderdetail.rightaddress}} <br>	{{orderdetail.rightaddress2}} &nbsp;{{orderdetail.rightcity}} &nbsp;{{orderdetail.rightcountry}} &nbsp;{{orderdetail.rightzip}}<br>&nbsp;{{orderdetail.rightmobile}} </h5>
+																		</h5>
+																			</div>
+																		</div>
+
+	<ul class="list-group">
+																		<div ng-repeat="(x, itemdetail) in reportCtrl.detailitem" class="itemdetail" >
+
+
+
+																		  <li class="list-group-item">
+
+																						<div class='row' style="padding-left: 45px;">
+																							<div class=" col-xs-4 ">
+
+																									<img src="{{itemdetail.itemimage}}" class="thumbnail" >
+
+
+																							</div>
+																							<div class=" col-xs-5 ">
+																								<div class='cart-product-price' align="left">
+																								<font color="#0099FF">{{itemdetail.priceall}} PHP</a>
+																								</div>
+																								<div class='cart-product-title' align="left">
+																							<h6><font color="#aaaaaa">	{{itemdetail.itemid}} &nbsp; 	{{itemdetail.itemname}} </font></h6>
+																								</div>
+
+																								<div class='cart-product-pv' align="left">
+																										<h6>	<font color="#0099FF"> {{itemdetail.pvall}} {{viewport.labels.pv}} </a></h6>
+																								</div>
+																							</div>
+																							<div class=" col-xs-3 " >
+																								<div >
+																								<h6>			<font color="#000000"> {{viewport.labels.qty}}:   {{itemdetail.qty}}</h6>
+																								</div>
+																							</div>
+																							</div>
+																		  </li>
+
+
+
+
+																		</div>
+
+																			</ul>
+
+
+																		<div class="well well-lg">
+																			<div class='row' >
+																					<div class=" col-xs-6 "  align="right" >
+																		 		 {{viewport.labels.pv}}
+																					</div>
+																					<div class=" col-xs-6 " align="right">
+																					{{orderdetail.pv}}
+																					</div>
+																			</div>
+
+																			<div class='row' >
+																					<div class=" col-xs-6 "  align="right" >
+																		 		 {{viewport.labels.tax}}
+																					</div>
+																					<div class=" col-xs-6 " align="right">
+																					{{orderdetail.tax}}
+																					</div>
+																			</div>
+																			<div class='row' >
+																					<div class=" col-xs-6 "  align="right" >
+																		 {{viewport.labels.amount}}
+																					</div>
+																					<div class=" col-xs-6 " align="right">
+																				 		{{orderdetail.cost1}}
+																					</div>
+																			</div>
+																			<div class='row' >
+																					<div class=" col-xs-6 "  align="right" >
+																	 {{viewport.labels.totalamount}}
+																					</div>
+																					<div class=" col-xs-6 " align="right">
+																						{{orderdetail.total2}}
+																					</div>
+																			</div>
+																		</div>
+																			<div class="row section-header">
+
+																		 {{viewport.labels.paymentmethod}}
+																			</div>
+
+																		<div class="well well-lg">
+																					<div class='row' >
+																							<div class=" col-xs-6 "  align="right" >
+																						{{viewport.labels.paymenttype}}
+																							</div>
+																							<div class=" col-xs-6 " align="right">
+																					 		{{orderdetail.method}}
+																							</div>
+																					</div>
+																					<div class='row' >
+																							<div class=" col-xs-6 "  align="right" >
+																			{{viewport.labels.receipt}}
+																							</div>
+																							<div class=" col-xs-6 " align="right">
+																								{{orderdetail.cost2}}
+																							</div>
+																					</div>
+																		</div>
+
+
+																	</div>
+															</div>
+
+
+
+
+
+															<div class="row "  align="center">
+																<div class="col-xs-12  medium-centered columns" >
+																	<button class="btn btn-info" type="button" style="width:140px" ng-click="reportCtrl.print()">
+																 {{viewport.labels.print}}
+																		</button>
+																</div>
+															</div>
+
+													</div>
+
+
+												  </div>
+
+												    </div>
+												</div>
+
+
+                        <div class="report-container hide " id="framediv">
+                            <iframe id="report-iframe" ng-src="{{reportCtrl.iframe_src}}"></iframe>
+                        </div>
+
+					</div>
+
+
+				</div>
+
+
+
+				<div class="page-loading-container hide" id="page-loading-container">
+					<div class="bubblingG">
+						<span id="bubblingG_1"> </span>
+						<span id="bubblingG_2"> </span>
+						<span id="bubblingG_3"> </span>
+					</div>
+				</div>
+
+				<div class="page-loading-container hide" id="page-loading-container1">
+					<div class="bubblingG">
+						<span id="bubblingG_1"> </span>
+						<span id="bubblingG_2"> </span>
+						<span id="bubblingG_3"> </span>
+					</div>
+				</div>
+
+				<!-- END PageCtrl -->
+
+				<!-- Footer -->
+				<footer class="icon-bar five-up" ng-controller="FooterController
+				as
+				footerCtrl">
+					<a ng-repeat="(i, menu) in footerCtrl.menus"
+					ng-class="footerCtrl.checkTabClass(i + 1)"
+					ng-click="footerCtrl.selectTab(i + 1)" style="text-decoration:none;" > <img class="in-active" ng-src="{{menu.icon_inactive}}"> <img class="active" ng-src="{{menu.icon_active}}"> <label>{{ menu.label}}</label> </a>
+				</footer>
+				<!-- END Footer Menu -->
+				<a class="exit-off-canvas"></a>
+			</div>
+
+			<!-- Login Page -->
+			<div id="page-login" class="page show" ng-controller="PageLoginController
+			as
+			pageLogin">
+				<div class="row" id="login-logo">
+					<div class="logo animated fadeInUp">
+						<img src="./imgs/logo-01.svg"/>
+					</div>
+					<div class="logo-tagline animated fadeInDown">
+						<img src="./imgs/logo-02.svg"/>
+					</div>
+				</div>
+				<form name="login-form" class="login-form" ng-submit="pageLogin.login(pageCtrl)">
+					<div class="row login-username-row animated fadeInUp">
+						<input type="text" class="round transparent text-white text-center" name="username" placeholder="Username" ng-model="pageLogin.username"/>
+					</div>
+					<div class="row login-password-row animated fadeInUp">
+						<input type="password" class="round transparent text-white text-center" name="password" placeholder="Password" ng-model="pageLogin.password"/>
+					</div>
+					<div class="row login-button-row animated fadeInUp">
+						<input type="submit" class="button round expand" value="Log in"/>
+					</div>
+					<!--
+					<div class="row login-register-row text-center animated flipInY">
+					<a class="text-white"> Register </a>
+					</div>
+					-->
+				</form>
+				<div class="text-center loading-container hide">
+					<div class="bubblingG">
+						<span id="bubblingG_1"> </span>
+						<span id="bubblingG_2"> </span>
+						<span id="bubblingG_3"> </span>
+					</div>
+				</div>
+			</div>
+			<!-- END Login Page -->
+
+			<!-- END Viewport -->
+ <iframe id="countMobile" style="display:none;"></iframe>
+		</div>
+	</body>
+</html>

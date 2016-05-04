@@ -1,0 +1,8 @@
+{
+    "href": "https:\/\/hydra.unicity.net\/v5\/whoami",
+    "username": "customer",
+    "permissions": ["guest"],
+    "customer": {
+        "href": "https:\/\/hydra.unicity.net\/v5\/customers\/a9c371ec65e55b499d2b0d9059b3f5f74c5c433c4ad62f44725952b9e0fb0416"
+    }
+}

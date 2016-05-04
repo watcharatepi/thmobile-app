@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <scenes>
+        <!--Today View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="profileUni" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ft6-oW-KC0"/>
+                        <viewControllerLayoutGuide type="bottom" id="FKl-LY-JtV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPw-Rx-GHM">
+                                <rect key="frame" x="105" y="47" width="203" height="47"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdZ-WM-A7m">
+                                <rect key="frame" x="17" y="14" width="80" height="80"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="iconpv" translatesAutoresizingMaskIntoConstraints="NO" id="OW0-aJ-9yB">
+                                <rect key="frame" x="15" y="120" width="70" height="70"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icontv" translatesAutoresizingMaskIntoConstraints="NO" id="d0A-Oi-nrT">
+                                <rect key="frame" x="125" y="120" width="70" height="70"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="iconov" translatesAutoresizingMaskIntoConstraints="NO" id="Or8-MK-iDd">
+                                <rect key="frame" x="238" y="120" width="70" height="70"/>
+                                <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAz-br-Wfk">
+                                <rect key="frame" x="15" y="200" width="75" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdR-Dm-7yk">
+                                <rect key="frame" x="236" y="200" width="75" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HvW-pH-Ipt">
+                                <rect key="frame" x="142" y="180" width="37" height="37"/>
+                                <animations/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jy6-vX-NL2">
+                                <rect key="frame" x="105" y="28" width="203" height="28"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Px-VX-Wd1">
+                                <rect key="frame" x="0.0" y="105" width="320" height="1"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.48349741404745711" green="0.51621809554973819" blue="0.50839276349060902" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1m-kQ-PX5">
+                                <rect key="frame" x="0.0" y="230" width="320" height="1"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.48349741400000001" green="0.51621809549999997" blue="0.50839276349999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-Ll-P05">
+                                <rect key="frame" x="30" y="258" width="40" height="40"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="enroll_white"/>
+                                <connections>
+                                    <action selector="enroll:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="Qdf-bK-3Fe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dv4-Rf-2V1">
+                                <rect key="frame" x="140" y="258" width="40" height="40"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="shopping-1"/>
+                                <connections>
+                                    <action selector="shopping:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="JvG-AM-32u"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z1k-ad-knt">
+                                <rect key="frame" x="253" y="258" width="40" height="40"/>
+                                <animations/>
+                                <state key="normal" backgroundImage="success-tracker"/>
+                                <connections>
+                                    <action selector="success:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="sbf-e7-Bmx"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT6-dp-v5Z">
+                                <rect key="frame" x="123" y="200" width="75" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="320"/>
+                    <connections>
+                        <outlet property="baname" destination="iPw-Rx-GHM" id="7fS-pT-aXO"/>
+                        <outlet property="banumber" destination="jy6-vX-NL2" id="4fA-l5-qUy"/>
+                        <outlet property="enrollB" destination="07Z-Ll-P05" id="TAe-7q-qrc"/>
+                        <outlet property="loading" destination="HvW-pH-Ipt" id="ovr-fK-LGM"/>
+                        <outlet property="ov" destination="LdR-Dm-7yk" id="EnT-4u-AXo"/>
+                        <outlet property="ovImg" destination="Or8-MK-iDd" id="NS1-4r-AI3"/>
+                        <outlet property="profileImg" destination="mdZ-WM-A7m" id="B9s-rE-Tg2"/>
+                        <outlet property="pv" destination="GAz-br-Wfk" id="itD-XR-YQG"/>
+                        <outlet property="pvImg" destination="OW0-aJ-9yB" id="Gm1-fW-yUb"/>
+                        <outlet property="shoppingB" destination="Dv4-Rf-2V1" id="6Xg-Md-Jhy"/>
+                        <outlet property="succB" destination="Z1k-ad-knt" id="exQ-h4-imB"/>
+                        <outlet property="tv" destination="GT6-dp-v5Z" id="nFV-XM-azj"/>
+                        <outlet property="tvImg" destination="d0A-Oi-nrT" id="c7t-WL-Fl0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="516" y="285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="enroll_white" width="160" height="158"/>
+        <image name="iconov" width="298" height="298"/>
+        <image name="iconpv" width="300" height="300"/>
+        <image name="icontv" width="300" height="300"/>
+        <image name="shopping-1" width="160" height="160"/>
+        <image name="success-tracker" width="160" height="160"/>
+    </resources>
+</document>

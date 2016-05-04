@@ -1,0 +1,141 @@
+{
+	"href": "https://hydra.unicity.net/v5/customers/a9c371ec65e55b499d2b0d9059b3f5f74c5c433c4ad62f44725952b9e0fb0416/sponsoredCustomers",
+	"items": [
+		{
+			"unicity": "174851766",
+			"humanName": {
+				"fullName": "Aekphuttha Panaprom"
+			},
+			"href": "https://hydra.unicity.net/v5/customers/0d1fffd302fa4d35520cebb5603964af76f3c3b03a97cd69b90f901b4bf3c6cd",
+			"sponsoredCustomers": {
+				"href": "https://hydra.unicity.net/v5/customers/0d1fffd302fa4d35520cebb5603964af76f3c3b03a97cd69b90f901b4bf3c6cd/sponsoredCustomers"
+			},
+			"metricsProfile": {
+				"href": "https://hydra.unicity.net/v5/customers/0d1fffd302fa4d35520cebb5603964af76f3c3b03a97cd69b90f901b4bf3c6cd/metricsProfile",
+				"pv": "0",
+				"gv": "0",
+				"ov": "0",
+				"rank": null
+			},
+			"metricsProfileHistory": {
+				"href": "https://hydra.unicity.net/v5/customers/0d1fffd302fa4d35520cebb5603964af76f3c3b03a97cd69b90f901b4bf3c6cd/metricsProfileHistory",
+				"items": [
+					{
+						"period": "2014-08",
+						"value": {
+							"pv": "0",
+							"gv": "0",
+							"ov": "0",
+							"rank": "1"
+						}
+					}, {
+						"period": "2014-07",
+						"value": {
+							"pv": "0",
+							"gv": "0",
+							"ov": "0",
+							"rank": null
+						}
+					}
+				]
+			},
+			"profilePicture": {
+				"href": "https://hydra.unicity.net/v5/customers/0d1fffd302fa4d35520cebb5603964af76f3c3b03a97cd69b90f901b4bf3c6cd/profilePicture"
+			},
+			"achievementsHistory": {
+				"href": "https://hydra.unicity.net/v5/customers/0d1fffd302fa4d35520cebb5603964af76f3c3b03a97cd69b90f901b4bf3c6cd/achievementsHistory"
+			},
+			"email": ""
+		}, {
+			"unicity": "174926366",
+			"humanName": {
+				"fullName": "Wanwasan Chantathum"
+			},
+			"href": "https://hydra.unicity.net/v5/customers/60330b6e2bc8dee6ac2b061641b21a3d21f6db3857cfc43d63c8f827a078012b",
+			"sponsoredCustomers": {
+				"href": "https://hydra.unicity.net/v5/customers/60330b6e2bc8dee6ac2b061641b21a3d21f6db3857cfc43d63c8f827a078012b/sponsoredCustomers"
+			},
+			"metricsProfile": {
+				"href": "https://hydra.unicity.net/v5/customers/60330b6e2bc8dee6ac2b061641b21a3d21f6db3857cfc43d63c8f827a078012b/metricsProfile",
+				"pv": "59",
+				"gv": "259",
+				"ov": "470",
+				"rank": null
+			},
+			"metricsProfileHistory": {
+				"href": "https://hydra.unicity.net/v5/customers/60330b6e2bc8dee6ac2b061641b21a3d21f6db3857cfc43d63c8f827a078012b/metricsProfileHistory",
+				"items": [
+					{
+						"period": "2014-08",
+						"value": {
+							"pv": "14",
+							"gv": "644",
+							"ov": "1086",
+							"rank": "1"
+						}
+					}, {
+						"period": "2014-07",
+						"value": {
+							"pv": "0",
+							"gv": "402",
+							"ov": "1882",
+							"rank": null
+						}
+					}
+				]
+			},
+			"profilePicture": {
+				"href": "https://hydra.unicity.net/v5/customers/60330b6e2bc8dee6ac2b061641b21a3d21f6db3857cfc43d63c8f827a078012b/profilePicture"
+			},
+			"achievementsHistory": {
+				"href": "https://hydra.unicity.net/v5/customers/60330b6e2bc8dee6ac2b061641b21a3d21f6db3857cfc43d63c8f827a078012b/achievementsHistory"
+			},
+			"email": "wanwasan@ghp.co.th"
+		}, {
+			"unicity": "176456866",
+			"humanName": {
+				"fullName": "Phuwis Upayokin"
+			},
+			"href": "https://hydra.unicity.net/v5/customers/acf611a5f6a406435a770b1ff860df8b5a916e9a4124e3ee6b2de64f1bf39732",
+			"sponsoredCustomers": {
+				"href": "https://hydra.unicity.net/v5/customers/acf611a5f6a406435a770b1ff860df8b5a916e9a4124e3ee6b2de64f1bf39732/sponsoredCustomers"
+			},
+			"metricsProfile": {
+				"href": "https://hydra.unicity.net/v5/customers/acf611a5f6a406435a770b1ff860df8b5a916e9a4124e3ee6b2de64f1bf39732/metricsProfile",
+				"pv": "0",
+				"gv": "0",
+				"ov": "0",
+				"rank": null
+			},
+			"metricsProfileHistory": {
+				"href": "https://hydra.unicity.net/v5/customers/acf611a5f6a406435a770b1ff860df8b5a916e9a4124e3ee6b2de64f1bf39732/metricsProfileHistory",
+				"items": [
+					{
+						"period": "2014-08",
+						"value": {
+							"pv": "0",
+							"gv": "0",
+							"ov": "0",
+							"rank": "1"
+						}
+					}, {
+						"period": "2014-07",
+						"value": {
+							"pv": "0",
+							"gv": "0",
+							"ov": "0",
+							"rank": null
+						}
+					}
+				]
+			},
+			"profilePicture": {
+				"href": "https://hydra.unicity.net/v5/customers/acf611a5f6a406435a770b1ff860df8b5a916e9a4124e3ee6b2de64f1bf39732/profilePicture"
+			},
+			"achievementsHistory": {
+				"href": "https://hydra.unicity.net/v5/customers/acf611a5f6a406435a770b1ff860df8b5a916e9a4124e3ee6b2de64f1bf39732/achievementsHistory"
+			},
+			"email": ""
+		}
+	]
+}

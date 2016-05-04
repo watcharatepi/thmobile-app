@@ -1,0 +1,51 @@
+{
+    "requestType": "createOrder",
+    "requestVersion": "1",
+    "transactionId": 4,
+    "appDeviceOSVersion": "1.0.0",
+    "appDeviceOSName": "Browser",
+    "requestObj": {
+        "applicationVersion": "0.5",
+        "applicationId": "th.unicity.mobileoffice",
+        "deviceId": "AAAAAAAA-1111-1111-AAAA-FFFFFFFFFFF",
+        "distMarket": "TH",
+        "order": {
+            "productItems": [{
+                    "productItemId": "27128",
+                    "quantity": 1,
+                    "autoShip": false
+                }, {
+                    "productItemId": "25726",
+                    "quantity": 1,
+                    "autoShip": false
+                }],
+            "shippingMethod": 3,
+            "shipTo": {
+                "name": "JOHN DOE",
+                "addr1": "555/55 MUANG DEANG RD.5",
+                "addr2": "",
+                "city": "20230",
+                "email": "test@unicity.com",
+                "state": "CHIANG RAI",
+                "zip": "20230",
+                "country": "TH",
+                "phone": "0811755555"
+            },
+            "billTo": {
+                "name": "JOHN DOE",
+                "addr1": "555/55 MUANG DEANG RD.5",
+                "addr2": "",
+                "city": "20230",
+                "email": "test@unicity.com",
+                "state": "CHIANG RAI",
+                "zip": "20230",
+                "country": "TH",
+                "phone": "0811755555"
+            }
+        },
+        "distributorType": "A",
+        "distributorId": "108357166",
+        "market": "TH"
+    },
+    "sessionToken": "20b3faac-9b45-45ff-a430-5b1f49b4d208"
+} 

@@ -1,0 +1,55 @@
+{
+    "requestType": "createOrder",
+    "requestVersion": "1",
+    "transactionId": 5,
+    "appDeviceOSName": "android",
+    "appDeviceOSVersion": "4.1.2",
+    "requestObj": {
+        "applicationId": "th.unicity.mobileoffice",
+        "applicationVersion": "1.13",
+        "deviceId": "221d4fa57026dd35",
+        "distMarket": "TH",
+        "order": {
+            "productItems": [
+                {
+                    "productItemId": "27128",
+                    "quantity": 1,
+                    "autoShip": false
+                },
+                {
+                    "productItemId": "25726",
+                    "quantity": 1,
+                    "autoShip": false
+                }
+            ],
+            "shippingMethod": 3,
+            "shipTo": {
+                "name": "JOHN DOE",
+                "addr1": "555/55 MUANG DEANG RD.5",
+                "addr2": "Sikhan",
+                "city": "Donmuang",
+                "email": "test@unicity.com",
+                "state": "Bangkok",
+                "zip": "10230",
+                "country": "TH",
+                "phone": "0811755555"
+            },
+            "orderTotal": "",
+            "billTo": {
+                "name": "JOHN DOE",
+                "addr1": "555/55 MUANG DEANG RD.5",
+                "addr2": "Sikhan",
+                "city": "Donmuang",
+                "email": "test@unicity.com",
+                "state": "Bangkok",
+                "zip": "10230",
+                "country": "TH",
+                "phone": "0811755555"
+            }
+        },
+        "distributorType": "A",
+        "distributorId": "108357166",
+                "market": "TH"
+    },
+    "sessionToken": ""
+}
